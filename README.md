@@ -4,7 +4,7 @@
 
 ## Piemonte
 
-- Manca tutto il 2017: **caricarlo su SCIA++
+- Manca tutto il 2017: **caricarlo su SCIA**
 - Sono disponibili numerose serie di temperatura e precipitazione potenzialmente utili al calcolo dei climatologici 1991-2020
 - Serie di lungo periodo per Rapporto Indicatori: 
   - due serie di precipitazione
