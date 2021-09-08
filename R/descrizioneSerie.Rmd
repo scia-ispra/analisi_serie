@@ -1,0 +1,811 @@
+---
+title: ""
+date: '`r Sys.Date()`'
+output: html_document
+author: Guido
+params:
+  distanza: 2000
+  distanza_elevation: 100
+  da_eliminare: ""
+  file_input: "serie controllate"
+  regione: "Emilia Romagna"
+  param: ""
+---
+
+
+```{r setup,echo=FALSE,error=FALSE,include=FALSE,warning=FALSE,message=FALSE}
+#Programma per trovare possibili associazioni fra serie limitrofe (serie da unire e quindi da omogeneizzare)
+#31 agosto 2021
+
+
+#Questo programma serve a identificare le serie sufficientemente lunghe per la stima dei trend e per il calcolo dei climatologici 1991-2020. Il
+#programma genera in output anche serie "unione": identifica le serie limitrofe che rispondono a determinati criteri di completezza e genera delle
+#nuove serie "unione" frutto dell'unione di due serie limitrofe.
+
+#I File di input possono essere:
+#-i file unici di input per i controlli di qualita (quindi tre file: precipitazione.csv, tmax.csv e tmin.csv)
+#-i file di output dei controlli di qualita (spaziali o di autoconsistenza, quindi un file per ciascuna serie)
+
+#Per l'omogeneizzazione delle serie il processo dovrebbe essere il seguente:
+# - controlli di qualita
+# - eventuali controlli spaziali
+# - identifico le serie utili alla stima dei trend/climatologici mediante questo programma.
+
+#Per utilizzare come input di questo programma le serie di output dei controlli di qualita utilizzare params$file_input dell'header YAML
+#e metterlo uguale a "serie controllate" (altrimenti utilizzare la stringa "serie raw")
+
+#Questo programma oltre i file di dati ha bisogno anche del file di anagrafica delle stazioni.
+
+#rmarkdown::render("descrizioneSerie.Rmd") <---per utilizzare View (la prima volta che va fatto girare il programma)
+
+#Far girare il codice una prima volta. Guardare la mappa, gli output e verificare se esistono delle stazioni che compaiono in piu' serie.
+#Questo succede ad esempio nel caso dell'Emilia ROmagna dove tre serie sono molto vicine e una stessa stazione compare nella creazione di due
+#serie differenti. L'unico modo per eliminare questi duplicati e' guardare i risultati e poi far rigirare il codice inserendo i codici stazioni
+#da eliminare dall'output nel vettore dei paramtri (params dell'header YAML) "da_eliminare".
+
+#Se da RStudio viene fatto generare il file html "browser" e "View" non funzionano. Quindi per verificare l'output una prima volta e' necessario
+#generare il file html mediante rmarkdown::render dalla console di RStudio.
+library("tidyverse")
+library("climatologici")
+library("guido")
+library("sf")
+library("leaflet")
+library("seplyr")
+library("guido")
+library("visdat")
+library("downloadthis")
+library("knitr")
+library("DT")
+annoI<-1961
+annoF<-2020
+
+creaCalendario(annoI,annoF)->calendario
+
+tolower(str_replace(str_replace(params$regione," +",""),"'",""))->REGIONE
+
+
+#una serie "unione" che inizia dopo di PRIMO_ANNO_DISPONIBILE va scartata
+PRIMO_ANNO_DISPONIBILE<-2000
+
+#una serie "unione" che termina prima di ULTIMO_ANNO_DISPONIBILE va scartata
+ULTIMO_ANNO_DISPONIBILE<-2018
+
+#scartiamo le serie troppo corte. Utilizziamo come soglia 5: una serie lunga 5 anni puo' essere utile per allungare una serie piu' lunga
+NUMERO.MINIMO.ANNI<-5
+
+#quale parametro: usare prcp per la precipitazione!!
+PARAM<-params$param
+
+#file dati
+FILE.DATI<-paste0(PARAM,".csv")
+
+
+
+#file anagrafica
+FILE.ANAGRAFICA<-list.files(pattern="^reg.+csv$")
+stopifnot(length(FILE.ANAGRAFICA)==1)
+print(glue::glue("File anagrafica: {FILE.ANAGRAFICA}"))
+
+#parametri per aggregare dati giornalieri a livello mensile
+MAX.SIZE.BLOCK.NA<-5
+MAX.NA<-10
+
+if(grepl("^p",PARAM)){ 
+  MAX.NA<-0
+  MAX.SIZE.BLOCK.NA<-0 
+  FILE.DATI<-"precipitazione.csv"
+}
+
+anni<-annoI:annoF
+
+#### Inizio
+
+
+if(params$file_input=="serie raw"){
+  
+  if(!file.exists(FILE.DATI)) stop(glue::glue("{FILE.DATI} non trovato!"))
+  
+  #questi sono i dati nel formato per il controllo di qualità delle serie giornaliere
+  read_delim(FILE.DATI,delim=";",col_names = TRUE,col_types = YYMMDD_TYPE) %>%
+    filter(yy>=annoI & yy<=annoF)->dati
+  
+}else{
+  
+  list.files(pattern="^[0-9a-zA-Z]+\\.txt$")->ffile
+  setdiff(ffile,"codici.txt")->ffile
+  
+  if(!length(ffile)) stop("Nessun file di output dei controlli di qualita' trovato nella directory!")
+  
+  purrr::map(ffile,.f=function(nomeFile){
+    
+    str_remove(nomeFile,"\\.txt")->codice
+    read_delim(nomeFile,delim=",",col_names=TRUE,col_types=cols(year=col_integer(),month=col_integer(),day=col_integer(),.default=col_double())) %>%
+      rename(yy=year,mm=month,dd=day) %>%
+      seplyr::select_se(c("yy","mm","dd",PARAM)) %>%
+      seplyr::rename_se(c(codice:=PARAM)) %>%
+      filter(yy>=annoI & yy<=annoF)
+    
+    
+  }) %>% reduce(.f=left_join,.init=calendario)->dati
+  
+}
+
+
+ncol(dati)-3->NUMERO_SERIE
+
+
+#########################################
+#AGGREGAZIONE DATI GIORNALIERI
+#########################################
+ClimateData(dati,param = PARAM)->cdati
+
+#questi parametri cambiano in base alla temperatura e precipitazione
+aggregaCD(cdati,max.na = MAX.NA,rle.check = TRUE,max.size.block.na = MAX.SIZE.BLOCK.NA)->mdati
+
+#per unire le serie utilizziamo sia per temperatura che per precipitazione max.na=4. In realtà questi valori potrebbero essere rivisti in base al tipo di analisi da effettuare (estremi, climatologici...)
+aggregaCD(mdati,max.na = 4,rle.check = TRUE,max.size.block.na = 1,ignore.par = FALSE,seasonal = TRUE)->ydati
+
+#eliminiamo le serie senza dati
+purrr::map(as.data.frame(ydati),.f=function(serie){
+  
+  
+  serie[!is.na(serie)]->out
+  if(!length(out)) return(NULL)
+  
+  out
+  
+}) %>% compact->listaSerie
+
+if(!length(listaSerie)) stop("Non ci sono serie con dati!!!")
+
+length(listaSerie)->NUMERO_DI_SERIE_CON_DATI
+
+#serie ordinate in ordine decrescente in base al numero di anni disponibili
+purrr::map_int(listaSerie,.f=length)->numeroAnni
+sort(numeroAnni,decreasing = TRUE)->numeroAnni
+
+numeroAnni[numeroAnni>=NUMERO.MINIMO.ANNI]->stazioniLunghe
+if(!length(stazioniLunghe)) stop(glue::glue("Non ci sono serie con almeno {NUMERO.MINIMO.ANNI} anni di dati annuali!"))
+
+
+############################
+#### Elaborazione anagrafica
+############################
+
+#ok ho trovato delle serie che hanno dati e hanno almeno {NUMERO.MINIMO.ANNI} anni di dati annuali. 
+#Cominciamo ad analizzare le stazioni limitrofe. Possono presentarsi due casi:
+# - le serie si sovrappongono completamente nel corso degli anni
+# - le serie si sovrappongono parzialmente.
+
+#Nel primo caso restituiamo entrambe le serie, e poi verra' valutata la validità di ciascuna serie in termini di completezza e continuiaà. 
+#Se a fine programma entrambe le serie sono valide, il programma andrà fatto rigirare passando i codici delle serie da eliminare.
+
+#Nel secondo caso creiamo una serie "unione": si tratta di una serie che ha nella sua parte iniziale i valori della serie A per poi terminare
+#con i valori della serie B limitrofa. Le serie "unione" ci permettono di preseguire serie storiche.
+
+read_delim(FILE.ANAGRAFICA,delim=";") %>%
+  mutate(SiteID=as.character(SiteID)) %>%
+  filter(SiteID %in% names(stazioniLunghe))->ana
+
+
+#se manca qualcuno di questi dati il programma si blocca
+which(is.na(ana$Elevation))->righe
+stopifnot(!length(righe))
+
+which(is.na(ana$Longitude))->righe
+stopifnot(!length(righe))
+
+which(is.na(ana$Latitude))->righe
+stopifnot(!length(righe))
+
+st_as_sf(ana,coords=c("Longitude","Latitude"),crs=4326)->sfAna
+st_transform(sfAna,crs=32632)->sfAna
+st_distance(sfAna)->matrice_distanze
+tibble(as.data.frame(matrice_distanze))->matrice_distanze
+
+names(matrice_distanze)<-ana$SiteID
+matrice_distanze$SiteID<-ana$SiteID
+
+#identifichiamo le stazioni vicine rispetto alla soglia definita in params$distanza
+matrice_distanze %>%
+  tidyr::gather(key="SiteID2",value="distanza",-SiteID) %>%
+  filter(SiteID!=SiteID2) %>%
+  mutate(distanza=round(as.numeric(distanza),1)) %>%
+  filter(distanza<=as.numeric(params$distanza))->stazioniVicine
+
+
+serieLimitrofe<-NULL
+
+#Potrebbero non esserci stazioni limitrofe nel raggio di ricerca definito da params$distanza
+#In questo caso il programma deve proseguire analizzando le singole serie
+if(nrow(stazioniVicine)){
+
+  ana %>%
+    filter(SiteID %in% stazioniVicine$SiteID)->subAna1
+  
+  ana %>%
+    filter(SiteID %in% stazioniVicine$SiteID2) %>%
+    rename(SiteID2=SiteID)->subAna2
+  
+  left_join(stazioniVicine,subAna1)->new_ana
+  left_join(new_ana,subAna2,by=c("SiteID2"))->newAna
+  
+  
+  #################### mettiamo da parte i codici SiteID e SiteID2 delle stazioni limitrofe: ci servono per identificare le altre stazioni, ovvero quelle che non
+  #hanno nessuna stazione limitrofa
+  #################################
+  c(newAna$SiteID,newAna$SiteID2)->serieLimitrofe
+
+  
+  
+  #verifico non solo la distanza nello spazio ma anche in quota
+  newAna %>%
+    mutate(distanzaElevation=round(abs(Elevation.x-Elevation.y),1)) %>%
+    filter(distanzaElevation<=as.numeric(params$distanza_elevation))->newAna
+  
+  #questo if serve perche in base alla quota newAna potrebbe non contenere stazioni limitrofe
+  if(nrow(newAna)){ 
+  
+    
+    newAna %>%
+      dplyr::select(SiteID,SiteID2,SiteName.x,SiteName.y,distanza,distanzaElevation,Elevation.x,Elevation.y,everything()) %>%
+      dplyr::distinct(distanza,distanzaElevation,.keep_all = TRUE)->newAna 
+    #potrebbero esserci due stazioni che distano da una stessa stazione lo stesso numero di metri in piano e in altezza..ma quanto probabile che capiti?
+
+    #Ok ho stazioni limitrofe nello spazio e in quota. Se le due serie si sovrappongono completamente nel tempo, allora restituisco una riga
+    #per ciascuna delle due stazioni. Se invece si sovrappongono parzialmente restituisco una sola riga di informazioni in cui compaiono i codici delle due serie
+    #e il codice nella nuova serie "unione".
+    
+    purrr::map2_df(.x=newAna$SiteID,.y=newAna$SiteID2,.f=function(.x,.y){
+      
+      #ydati: dati aggregati a livello annuale  
+      ydati[,c(.x,.y)]->suby
+      as.data.frame(suby)->suby
+      names(suby)<-c("yy","serie1","serie2")
+      
+      #vedo quale serie finisce piu' tardi: il codice di questa serie sarà il codice della nuova serie "unione"  
+      which(!is.na(suby$serie1))->datiValidi1
+      max(datiValidi1)->ultimo_anno_valido1
+      min(datiValidi1)->primo_anno_valido1
+      
+      which(!is.na(suby$serie2))->datiValidi2
+      max(datiValidi2)->ultimo_anno_valido2
+      min(datiValidi2)->primo_anno_valido2
+      
+      ##
+      if((ultimo_anno_valido1 > ultimo_anno_valido2) & (primo_anno_valido1 > primo_anno_valido2)){
+        
+        nomeSerie<-.x
+        annoInizioSerie<-primo_anno_valido1
+        annoFineSerie<-ultimo_anno_valido1 
+        
+      }else if((ultimo_anno_valido2 > ultimo_anno_valido1) & (primo_anno_valido2 > primo_anno_valido1)){
+        
+        nomeSerie<-.y
+        annoInizioSerie<-primo_anno_valido2
+        annoFineSerie<-ultimo_anno_valido2
+        
+      }else{
+        
+    
+        nomeSerie<-.x
+        annoInizioSerie<-primo_anno_valido1
+        annoFineSerie<-ultimo_anno_valido1 
+        
+        tibble(SiteID=.x,
+               SiteID2=NA,
+               ultimo_anno_valido.x=anni[ultimo_anno_valido1],
+               ultimo_anno_valido.y=anni[ultimo_anno_valido2],
+               nomeSerieUnione=nomeSerie,
+               annoInizioSerie=anni[annoInizioSerie],
+               annoFineSerie=anni[annoFineSerie],
+               primo_anno_valido.x=anni[primo_anno_valido1],
+               primo_anno_valido.y=anni[primo_anno_valido2],
+               temp=max(ultimo_anno_valido.x,ultimo_anno_valido.y))->meta1
+        
+        nomeSerie<-.y
+        annoInizioSerie<-primo_anno_valido2
+        annoFineSerie<-ultimo_anno_valido2
+        
+        tibble(SiteID=NA,
+               SiteID2=.y,
+               ultimo_anno_valido.x=anni[ultimo_anno_valido1],
+               ultimo_anno_valido.y=anni[ultimo_anno_valido2],
+               nomeSerieUnione=nomeSerie,
+               annoInizioSerie=anni[annoInizioSerie],
+               annoFineSerie=anni[annoFineSerie],
+               primo_anno_valido.x=anni[primo_anno_valido1],
+               primo_anno_valido.y=anni[primo_anno_valido2],
+               temp=max(ultimo_anno_valido.x,ultimo_anno_valido.y))->meta2
+        
+        return(bind_rows(meta1,meta2))
+        
+      } 
+      
+      
+      #genero un tibble in cui compaiono i codici delle due serie che vado ad unire, l'anno di inizio e l'anno di fine di ciascuna serie e il codice che assumerà la serie "unione"  
+      tibble(SiteID=.x,
+             SiteID2=.y,
+             ultimo_anno_valido.x=anni[ultimo_anno_valido1],
+             ultimo_anno_valido.y=anni[ultimo_anno_valido2],
+             nomeSerieUnione=nomeSerie,
+             annoInizioSerie=anni[annoInizioSerie],
+             annoFineSerie=anni[annoFineSerie],
+             primo_anno_valido.x=anni[primo_anno_valido1],
+             primo_anno_valido.y=anni[primo_anno_valido2],
+             temp=max(ultimo_anno_valido.x,ultimo_anno_valido.y))
+      
+    })->metaInfo
+    
+    #metaInfo contiene le informazioni sulle serie "unione" o sulle singole serie limitrofe che pero' non ho unito in quanto si sovrappongono totalmente nel tempo
+
+    metaInfo %>%
+      filter(!is.na(SiteID) & !is.na(SiteID2))->per_merge
+
+    left_join(per_merge,newAna)->temp1
+
+    metaInfo %>%
+      filter(!is.na(SiteID) & is.na(SiteID2))->zz
+    left_join(zz %>% dplyr::select(-SiteID2),newAna) %>% dplyr::select(-SiteID2,-matches("^.+\\.y"))->temp2
+
+    metaInfo %>%
+      filter(is.na(SiteID) & !is.na(SiteID2))->zz
+    left_join(zz %>% dplyr::select(-SiteID),newAna) %>% dplyr::select(-SiteID,-matches("^.+\\.y"))->temp3
+
+    #newAna e' l'anagrafica che contiene informazioni sulle serie limitrofe, che le abbia unite o meno
+    bind_rows(temp1,temp2,temp3) %>%
+      filter(nomeSerieUnione %in% c(SiteID,SiteID2))->newAna
+
+    #############
+    # Verifichiamo che non ci siano doppioni, serie utilizzate due volte per formare una nuova serie
+    ############
+    
+    #potrebbe succedere che una serie "unione" abbia lo stesso codice di un'altra serie "unione" (succede quando una stessa serie 
+    #contribuisce a costruire la parte finale di una serie unione). Aggiungiamo dei suffissi per distinguere queste nuove serie. 
+    #Attenzione: comunque potrebbe succedere che una stessa serie contribuisca alla parte iniziale di due serie. Di questo me ne accorgo solo guardando
+    #i risultati del programma. La presenza di serie che contribuiscono alla creazione di piu' serie unione va gestita facendo rigirare il programma
+    #con i codici delle serie da eliminare in params$da_eliminare.
+    which(table(newAna$nomeSerieUnione) > 1)->quali
+    
+    if(length(quali)){#quali
+      
+      purrr::walk(names(quali),.f=function(codice){ 
+        
+        
+        nrow(newAna[newAna$nomeSerieUnione %in% codice, ])->quanti_ripetuti
+        newAna[newAna$nomeSerieUnione %in% codice, ]$nomeSerieUnione<<-paste0(newAna[newAna$nomeSerieUnione %in% codice, ]$nomeSerieUnione,"_",1:quanti_ripetuti)
+        
+      })#su walk
+    
+      
+    }#quali
+
+
+    #unione serie: creo un dataframe di dati giornaliere con le serie che compaiono in newAna. Queste sono serie limitrofe sciolte o serie "unione".
+    #Partendo da questo dataframe ricalcolo i dati annuali e verifico la completezza e continuià delle serie. Le serie che non soddisferanno questi criteri 
+    #verranno eliminate.
+    purrr::map(.x=1:nrow(newAna),.f=function(riga){ 
+      
+    
+      newAna[riga,]$SiteID->SiteID 
+      newAna[riga,]$SiteID2->SiteID2
+      newAna[riga,]$nomeSerieUnione->nomeSerieUnione
+      #bak1 contiene i nomi delle serie limitrofe (unione o sciolte) con eventuali suffissi identificati da "_". Per estrarre i dati
+      #giornalieri devo eliminare questi suffissi.
+      nomeSerieUnione->bak1
+      str_remove(nomeSerieUnione,"_.+")->nomeSerieUnione
+      
+      #se SiteID o SiteID2 == NA significa che si tratta di una serie limitrofa a un'altra serie ma che non e' stata unita ed e' rimasta sciolta. Questa serie la 
+      #restituisco cosi come e'.
+      if(any(is.na(c(SiteID,SiteID2)))) return(dati[,c("yy","mm","dd",nomeSerieUnione)] %>% seplyr::rename_se(c(bak1:=nomeSerieUnione)))
+      
+      c(SiteID,SiteID2)[!grepl(paste0("^",nomeSerieUnione,"$"),c(SiteID,SiteID2))]->nomeAltraSerie
+      str_remove(nomeAltraSerie,"_.+")->nomeAltraSerie
+      
+      #la serie unione dovra avere tutti i dati dalla prima serie piu' i dati della seconda serie, il codice qui sotto fa proprio il 
+      #merge fra i due tronconi da unire
+      newAna[riga,]$annoInizioSerie->annoInizioSerie
+    
+      dati[,c("yy","mm","dd",nomeSerieUnione)] %>%
+        filter(yy>=annoInizioSerie) %>%
+        seplyr::rename_se(c(bak1:=nomeSerieUnione))->subDati1
+      
+      dati[,c("yy","mm","dd",nomeAltraSerie)] %>%
+        filter(yy< annoInizioSerie) %>%
+        seplyr::rename_se(c(bak1:=nomeAltraSerie))->subDati2  
+      
+      bind_rows(subDati1,subDati2) %>%
+        arrange(yy,mm,dd)
+      
+    }) %>% purrr::reduce(.,.f=left_join,.init = calendario)->finale
+
+    #### Ok, a questopunto posso utilizzare finale per ricostruire le serie annuali e verificarne continuita e completezza
+    ClimateData(finale,param = PARAM)->cdati2
+    #questi parametri cambiano in base alla temperatura e precipitazione
+    aggregaCD(cdati2,max.na = MAX.NA,rle.check = TRUE,max.size.block.na = MAX.SIZE.BLOCK.NA)->mdati2
+    #per unire le serie utilizziamo sia per temperatura che per precipitazione max.na=4. In realtà questi valori potrebbero essere rivisti in base al tipo di 
+    #analisi da effettuare (estremi, climatologici...)
+    aggregaCD(mdati2,max.na = 4,rle.check = TRUE,max.size.block.na = 1,ignore.par = FALSE,seasonal = TRUE)->ydati2
+
+
+    #continuita e completezza
+    purrr::map(.x=newAna$nomeSerieUnione,.f=function(.x){
+      
+    
+      as.vector(ydati2[,.x])->serie
+      which(!is.na(serie))->quali
+      
+      if(!length(quali)) return()
+      
+      min(quali)->primoAnnoValido
+      max(quali)->ultimoAnnoValido
+      
+      if(anni[primoAnnoValido]>PRIMO_ANNO_DISPONIBILE) return()
+      if(anni[ultimoAnnoValido]< ULTIMO_ANNO_DISPONIBILE) return()
+      
+      ydati2[primoAnnoValido:ultimoAnnoValido,.x]->subydati2
+      checkSeriesValidity(subydati2,percentuale.anni.validi = 80,max.size.block.na = 14,ultimi_anni_validi = 0,lunghezza.minima.serie = 10)->ris
+      
+      
+      if(is.null(ris)) return()
+      
+      #print(plot(ydati2[,c(.x)],main=.x))
+    
+      .x
+      
+    })->codiciSerieValide
+
+    #codiciSerieValide contiene solo i codici di serie che hanno delle serie limitrofe nel raggio di tot kilometri (params$distanza)
+    #vanno poi verificate le serie che non hanno limitrofe nel raggio stabilito da "distanza" ma che possono essere ccomunque valide.
+    purrr::compact(codiciSerieValide)->codiciSerieValide
+
+    if(length(codiciSerieValide)){
+  
+      unlist(codiciSerieValide)->codiciSerieValide
+
+      newAna %>%
+        filter(nomeSerieUnione %in% codiciSerieValide)->newAna
+      
+      as.data.frame(ydati2[,codiciSerieValide])->df
+      
+      #se controllando i risultati ci accorgiamo che ci sono serie che contribuiscono alla creazione di due o piu' serie "unione" facciamo
+      #rigirare il programma inserendo in params$da_eliminare i codici che vanno tolti da "codiciSerieValide"
+      if(length(params$da_eliminare)) setdiff(names(df),c("yy",params$da_eliminare))->codiciSerieValide  
+      
+      newAna %>%
+        filter(nomeSerieUnione %in% codiciSerieValide)->newAna
+
+  
+    }else{
+      codiciSerieValide<-NULL 
+    }#fine if
+    
+  } #if sulla quota
+  
+}#if su nrow(ana)
+
+
+
+#################################
+#Esaminiamo le stazioni che non hanno stazioni limitrofe nel raggio di params$distanza 
+#################################
+names(ydati)->codiciSerieSenzaLimitrofe
+
+if(!is.null(serieLimitrofe))  setdiff(codiciSerieSenzaLimitrofe,serieLimitrofe)->codiciSerieSenzaLimitrofe
+
+#su queste serie senza limitrofe faccio gli stessi controlli fatto sulle serie che hanno stazioni limitrofe: controlli di continuita e completezza sugli aggregati annuali
+#utilizzando ydati che ho già calcolato precedentemente
+purrr::map(.x=codiciSerieSenzaLimitrofe,.f=function(.x){
+  
+  #queste serie le prendo da ydati e non da ydati2
+  as.vector(ydati[,.x])->serie
+  which(!is.na(serie))->quali
+  
+  if(!length(quali)) return()
+  
+  min(quali)->primoAnnoValido
+  max(quali)->ultimoAnnoValido
+  
+  if(anni[primoAnnoValido]>PRIMO_ANNO_DISPONIBILE) return()
+  if(anni[ultimoAnnoValido]< ULTIMO_ANNO_DISPONIBILE) return()
+  
+  ydati[primoAnnoValido:ultimoAnnoValido,.x]->subydati
+  checkSeriesValidity(subydati,percentuale.anni.validi = 80,max.size.block.na = 14,ultimi_anni_validi = 0,lunghezza.minima.serie = 10)->ris
+  
+  
+  if(is.null(ris)) return()
+
+  .x
+  
+})->codiciSerieValideSenzaLimitrofe
+
+#codiciSerieValide contiene solo i codici di serie che hanno delle serie limitrofe nel raggio di tot kilometri (params$distanza)
+#vanno poi verificate le serie che non hanno limitrofe nel raggio stabilito da "distanza" ma che possono essere ccomunque valide.
+purrr::compact(codiciSerieValideSenzaLimitrofe)->codiciSerieValideSenzaLimitrofe
+
+if(!length(codiciSerieValideSenzaLimitrofe)){
+  codiciSerieValideSenzaLimitrofe<-NULL
+}else{
+  unlist(codiciSerieValideSenzaLimitrofe)->codiciSerieValideSenzaLimitrofe
+}
+#A questo punto ho:
+# - codiciSerieValide ( i codici delle serie limitrofe/unione valide)
+# - codiciSerieValideSenzaLimitrofe (codici delle serie valide ma che non hanno stazioni limitrofe)
+
+if(is.null(codiciSerieValide) & is.null(codiciSerieValideSenzaLimitrofe)) stop("NOn ci sono serie valide per questo dataset!")
+
+ifelse(length(codiciSerieValide),TRUE,FALSE)->CODICI_SERIE_VALIDE
+ifelse(length(codiciSerieValideSenzaLimitrofe),TRUE,FALSE)->CODICI_SERIE_VALIDE_SENZA_LIMITROFE
+if(!length(codiciSerieValide)) newAna<-tibble() #dataframe con zero righe
+```
+
+<br>
+
+# Regione `r params$regione`,  parametro: `r ifelse(grepl("^p",PARAM),"precipitazione",PARAM)` 
+
+<br>
+
+Identificazione delle serie potenzialmente utili al:
+
+- calcolo dei trend di lungo periodo
+- al calcolo dei valori climatologici 1991-2020
+
+Le serie identificate iniziano non piu' tardi del **`r PRIMO_ANNO_DISPONIBILE`** e terminano non prima del **`r ULTIMO_ANNO_DISPONIBILE`**. La disponibilita' e la continuita' delle serie è stata verificata a livello annuale. 
+
+👉 I dati giornalieri delle serie identificate come valide sono state salvate sul file **`r glue::glue("{PARAM}.{REGIONE}.serie_valide.csv")`**.
+
+Per il calcolo dei valori mensili sono stati utilizzati i criteri del WMO: 
+
+- la regola del 5/10 per i dati giornalieri di temperatura
+- 0 dati mancanti per i dati giornalieri di precipitazione
+
+<hr>
+
+### Sintesi dati
+<br>
+
+| Numero di serie in anagrafica | Numero di serie con almeno un anno valido | Numero di serie valide |
+|-------------------------------|-------------------------------------------|------------------------|
+| `r NUMERO_SERIE`               | `r NUMERO_DI_SERIE_CON_DATI`              | `r nrow(newAna)+length(codiciSerieValideSenzaLimitrofe)`           |
+
+<br>
+
+Per la regione `r params$regione` sono disponibili `r NUMERO_SERIE` stazioni in anagrafica. Le serie che per il parametro `r params$param` hanno almeno un valore annuale valido sono **`r NUMERO_DI_SERIE_CON_DATI`** (non tutte le stazioni in anagrafica hanno serie di dati per tutti e tre i parametri precipitazione, tmax e tmin). Le serie potenzialmente utili al calcolo dei valori climatologici 1991-2020/trend di lungo periodo sono **`r nrow(newAna)+length(codiciSerieValideSenzaLimitrofe)`**. In particolare:
+
+- il numero di serie potenzialmente utili al calcolo dei valori climatologici 1991-2020/trend di lungo periodo con almeno una stazione limitrofa nel raggio di `r params$distanza/1000` km è **`r nrow(newAna)`**.
+
+- il numero di serie potenzialmente utili al calcolo dei valori climatologici 1991-2020/trend di lungo periodo prive di stazioni limitrofe nel raggio di `r params$distanza/1000` km è **`r length(codiciSerieValideSenzaLimitrofe)`**.
+
+<br>
+
+
+### Reti di provenienza delle serie
+
+```{r reti,echo=FALSE,warning=FALSE,include=TRUE,fig.width=6.5,fig.asp=1}
+ggplot(data=ana %>% filter(SiteID %in% names(ydati)) %>% mutate(nome_rete=str_wrap(nome_rete,20)))+
+  geom_bar(stat = "count",aes(x=nome_rete,fill=nome_rete))+
+  ylab("Numero di stazioni")+
+  xlab("")+
+  scale_fill_discrete(guide="none")+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=90))
+```
+
+<hr>
+
+Distinguiamo due casi:
+
+- stazioni che nel raggio di `r params$distanza/1000` km hanno stazioni limitrofe
+- stazioni che nel raggio di `r params$distanza/1000` km non hanno stazioni limitrofe
+
+In entrambi i casi vogliamo identificare serie sufficientemente lunghe e complete. L'analisi di completezza e continuità delle serie con stazioni limitrofe viene fatta dopo aver unificato le serie. 
+
+**Quando uniamo due serie limitrofe?**
+
+Due serie limitrofe vengono unite per generare una nuova serie "unione" quando:
+
+- le due serie si sovrappongono temporalmente solo parzialmente oppure
+- le due serie sono totalmente disgiunte
+
+Quando due serie limitrofe si sovrappongono completamente dal punto di vista temporale vengono analizzate separatamente e nessuna serie unione viene generata.
+
+```{asis,echo=CODICI_SERIE_VALIDE}
+<br>
+<br>
+<br>
+  
+### Serie limitrofe
+  
+`SiteID` e `SiteID2` sono i codici delle coppie di stazioni limitrofe. Il campo `nomeSerieUnione` riporta il nome della nuova serie unione. Il nome della serie unione e' il nome della serie piu' recente dal punto di vista temporale. **Nella tabella che segue le righe evidenziate in verde si riferiscono a serie che iniziano prima del 1980**. 
+
+<br>
+
+```
+
+```{r,eval=CODICI_SERIE_VALIDE,echo=FALSE,message=FALSE,include=FALSE}
+table(newAna$SiteID)->tabellaID
+names(tabellaID)[tabellaID>1]-> codici_id_ripetuti
+ifelse(length(codici_id_ripetuti),TRUE,FALSE)->CODICI_ID_RIPETUTI
+
+table(newAna$SiteID2)->tabellaID2
+names(tabellaID2)[tabellaID2>1]-> codici_id2_ripetuti
+ifelse(length(codici_id2_ripetuti),TRUE,FALSE)->CODICI_ID2_RIPETUTI
+```
+
+```{asis,echo=CODICI_ID_RIPETUTI}
+#### Codici SiteID ripetuti
+
+⛔️ I codici  che seguono vanno eliminati dai risultati intervenendo sul programma!
+  
+  
+```
+
+```{r,eval=CODICI_ID_RIPETUTI,echo=FALSE,message=FALSE,include=TRUE,class.output='bg-warning'}
+print(codici_id_ripetuti)
+```
+
+```{asis,echo=CODICI_ID2_RIPETUTI}
+#### Codici SiteID2 ripetuti
+
+⛔️ I codici  che seguono vanno eliminati dai risultati intervenendo sul programma!
+
+
+  
+```
+
+```{r,eval=CODICI_ID2_RIPETUTI,echo=FALSE,message=FALSE,include=TRUE,class.output='bg-warning'}
+print(codici_id2_ripetuti)
+```
+
+<br>
+
+```{r tabella,include=TRUE,echo=FALSE,message=FALSE,warning=FALSE,eval=CODICI_SERIE_VALIDE}
+newAna %>%
+  mutate(serie_lunga=ifelse((primo_anno_valido.x<1980) |(primo_anno_valido.y<1980),1,0))->newAna
+
+datatable(newAna %>% dplyr::select(-matches("label"),-matches("County"))) %>%
+  formatStyle(columns = "serie_lunga",target="row",backgroundColor = styleEqual(c(0,1),c("white","lightgreen")))
+```  
+
+### Anagrafica serie valide
+
+Qui e' possibile scaricare l'anagrafica di tutte le serie identificate come potenzialmente utili al calcolo dei climatologici 1991-2020 e/o al calcolo dei trend di lungo periodo. Questa anagrafica include la selezione finale di tutte le serie (che abbiano serie limitrofe o meno).
+
+```{r,include=TRUE,message=FALSE,warning=FALSE,echo=FALSE}
+#anagrafica di tutte le serie 
+c(codiciSerieValide,codiciSerieValideSenzaLimitrofe)->codiciTutti
+codiciTutti[!is.null(codiciTutti)]->codiciTutti
+str_remove(codiciTutti,"_.+$")->temp
+
+datatable(ana %>% filter(SiteID %in% temp))
+
+downloadthis::download_this(ana %>% filter(SiteID %in% temp),output_name=glue::glue("{PARAM}.{REGIONE}.anagrafica.stazioni_valide"),output_extension=".csv",button_label="Scarica anagrafica")
+
+
+daScrivere<-NULL
+if(!is.null(codiciSerieValide) & !is.null(codiciSerieValideSenzaLimitrofe)) left_join(finale[,c("yy","mm","dd",codiciSerieValide)],dati[,c("yy","mm","dd",codiciSerieValideSenzaLimitrofe)])->daScrivere
+if(!is.null(codiciSerieValideSenzaLimitrofe)) dati[,c("yy","mm","dd",codiciSerieValideSenzaLimitrofe)]->daScrivere
+if(!is.null(codiciSerieValide)) finale[,c("yy","mm","dd",codiciSerieValide)]->daScrivere
+
+
+write_delim(daScrivere,file=glue::glue("{PARAM}.{REGIONE}.serie_valide.csv"),delim=";",col_names = TRUE)
+```
+
+<hr>
+
+## Disponibilità dati
+
+Il grafico sulla disponibilità dei dati rappresenta i dati aggregati a livello annuale. Il `grigio` corrisponde a undato disponibile, il `nero` corrisponde a un dato mancante. Ogni colonna rappresenta una serie di dati annuali dal `r annoI` (parte alta del grafico) a `r annoF` (in basso).
+
+
+```{asis,echo=CODICI_SERIE_VALIDE}
+
+<br>
+  
+### Serie con stazioni limitrofe
+  
+<br>
+```
+
+```{r vismiss,include=TRUE,echo=FALSE,message=FALSE,warning=FALSE,fig.height=8, fig.width=10,eval=CODICI_SERIE_VALIDE}
+print(vis_miss(as.data.frame(ydati2[,codiciSerieValide])))
+```
+
+```{asis,echo=CODICI_SERIE_VALIDE_SENZA_LIMITROFE}
+
+<br>
+  
+### Serie senza stazioni limitrofe
+  
+<br>
+```
+
+```{r vismiss2,include=TRUE,echo=FALSE,message=FALSE,warning=FALSE,fig.height=8, fig.width=10,eval=CODICI_SERIE_VALIDE_SENZA_LIMITROFE}
+print(vis_miss(as.data.frame(ydati[,codiciSerieValideSenzaLimitrofe])))
+```
+
+<hr>
+
+### Distribuzione spaziale delle serie identificate
+
+In blu e in rosso sono identificate le stazioni identificate come "valide" fra quelle che hanno una stazione limitrofa nel raggio di `r params$distanza/1000` km.
+
+In verde sono riportate le stazioni identificate come "valide" prive di stazioni limitrofe nel raggio di `r params$distanza/1000` km.
+
+<br>
+
+
+```{r mappa_serie_associate, echo=FALSE, fig.height=8, fig.width=10, message=FALSE, warning=FALSE, include=TRUE}
+
+if(is.null(codiciSerieValide)){
+
+leaflet() %>%
+  leaflet::addTiles() %>%
+  leaflet::addCircleMarkers(data=ana %>% filter(SiteID %in% codiciSerieValideSenzaLimitrofe),lng = ~Longitude,lat=~Latitude,color = "red",label = ~SiteID)
+  
+}
+
+if(is.null(codiciSerieValideSenzaLimitrofe)){
+
+leaflet() %>%
+  leaflet::addTiles() %>%
+  leaflet::addCircleMarkers(data=ana %>% filter(SiteID %in% str_remove(newAna$SiteID2,"_+")),lng = ~Longitude,lat=~Latitude,color = "red",label = ~SiteID) %>%
+  leaflet::addCircleMarkers(data=ana %>% filter(SiteID %in% str_remove(newAna$SiteID,"_+")),lng = ~Longitude,lat=~Latitude,color = "blue",label = ~SiteID)  
+  
+}
+
+if(!is.null(codiciSerieValideSenzaLimitrofe) & !is.null(codiciSerieValide)){
+
+leaflet() %>%
+  leaflet::addTiles() %>%
+  leaflet::addCircleMarkers(data=ana %>% filter(SiteID %in% str_remove(newAna$SiteID2,"_+")),lng = ~Longitude,lat=~Latitude,color = "red",label = ~SiteID) %>%
+  leaflet::addCircleMarkers(data=ana %>% filter(SiteID %in% str_remove(newAna$SiteID,"_+")),lng = ~Longitude,lat=~Latitude,color = "blue",label = ~SiteID) %>%
+  leaflet::addCircleMarkers(data=ana %>% filter(SiteID %in% codiciSerieValideSenzaLimitrofe),lng = ~Longitude,lat=~Latitude,color = "green",label = ~SiteID)  
+  
+}
+```
+
+<hr>
+
+### Grafici serie
+
+```{asis,echo=CODICI_SERIE_VALIDE}
+
+<br>
+
+#### Serie valide (serie con stazioni limitrofe)
+  
+<br>
+```
+
+
+```{r,include=TRUE,echo=FALSE,message=FALSE,warning=FALSE,fig.width=8,fig.height=6,eval=CODICI_SERIE_VALIDE}
+
+purrr::walk(.x=codiciSerieValide,.f=function(.x){
+  
+  
+  as.vector(ydati2[,.x])->serie
+  print(plot(ydati2[,c(.x)],main=.x))
+  
+})
+
+```
+
+```{asis,echo=CODICI_SERIE_VALIDE_SENZA_LIMITROFE}
+
+<br>
+
+#### Serie valide (serie con stazioni limitrofe)
+
+<br>
+```
+
+```{r,include=TRUE,echo=FALSE,message=FALSE,warning=FALSE,fig.width=8,fig.height=6,eval=CODICI_SERIE_VALIDE_SENZA_LIMITROFE}
+purrr::walk(.x=codiciSerieValideSenzaLimitrofe,.f=function(.x){
+  
+  
+  as.vector(ydati[,.x])->serie
+  print(plot(ydati[,c(.x)],main=.x))
+  
+})
+```
