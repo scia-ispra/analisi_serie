@@ -2,6 +2,11 @@
 
 [Analisi delle serie per calcolo climatologici e serie di lungo periodo.](https://scia-ispra.github.io/analisi_serie/)
 
+## Emilia ROmagna
+
+- Precipitazione: 12 serie storiche dal 1961
+- Temperatura: 6 serie storiche dal 1961
+
 ## Piemonte
 
 - Manca tutto il 2017: **caricarlo su SCIA**
