@@ -21,6 +21,13 @@
 - Serie di lungo periodo per Rapporto Indicatori: 
   - almeno 15 serie di precipitazione
   - **nessuna serie di temperatura**
+
+## Sicilia
+
+- Precipitazione: le serie delle rete Osservatorio Acque terminano tutte nel 2018. Dovrebbero essere disponibili anche gli anni piu' recenti. Sono stati caricati?
+- Temperatura minima e massima: i dati si fermano al 2015. Dati al 2020 sono disponibili per le stazioni della rete SIAS.
+
+
  
 
 
