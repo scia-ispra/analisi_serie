@@ -2,6 +2,11 @@
 
 [Analisi delle serie per calcolo climatologici e serie di lungo periodo.](https://scia-ispra.github.io/analisi_serie/)
 
+## Abruzzo
+
+- Precipitazione: circa 30 serie. Quelle piu' antiche partono dal 1974.
+- Temperatura: circa 20 serie. Quelle piu' antiche partono dal 1974.
+
 ## Aeronautica
 
 - Precipitazione: 38 potenziali serie storiche (1961 -  2020) per trend di lungo periodo e climatologici
