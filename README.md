@@ -2,6 +2,11 @@
 
 [Analisi delle serie per calcolo climatologici e serie di lungo periodo.](https://scia-ispra.github.io/analisi_serie/)
 
+## Aeronautica
+
+- Precipitazione: 38 potenziali serie storiche (1961 -  2020) per trend di lungo periodo e climatologici
+- Temperatura: 92 potenziali serie storiche (1961 - 2020) per trend di lungo periodo e climatologici
+
 ## Emilia Romagna
 
 - Precipitazione: 12 serie storiche dal 1961
