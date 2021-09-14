@@ -10,6 +10,12 @@ Analisi dei risultati per l'identificazione delle serie di temperatura e precipi
 - calcolo dei valori climatologici
 - calcolo dei trend di lungo periodo
 
+## Abruzzo
+
+- [precipitazione](./abruzzo/prcp.abruzzo.descrizioneSerie.html)
+- [tmax](./abruzzo/tmax.abruzzo.descrizioneSerie.html)
+- [tmin](./abruzzo/tmin.abruzzo.descrizioneSerie.html)
+
 ## Aeronautica
 
 - [precipitazione](./aeronautica/prcp.aeronautica.descrizioneSerie.html)
