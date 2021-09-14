@@ -3,18 +3,18 @@ library("tidyverse")
 
 #quale parametro: usare prcp per la precipitazione!!
 PARAM<-c("prcp","tmax","tmin")[3] 
-REGIONE<-"Piemonte"
+REGIONE<-"Emilia Romagna"
 nomeScript<-"descrizioneSerie.Rmd"
 nomeHTML<-str_replace(nomeScript,"\\.Rmd$",".html")
 
 DA_ELIMINARE<-c("")
 
 if(grepl("^p",PARAM)){
-  DA_ELIMINARE<-c("5616_1","5616_3","5647_2","5647_3","5649_1","5651_2","5651_3")  
+  DA_ELIMINARE<-c("12702_1")  
 }else if(grepl("max",PARAM)){
-  DA_ELIMINARE<-c("5616_1","5616_3","5649_1")    
+  DA_ELIMINARE<-c("14354_1","9320_1")    
 }else if(grepl("min",PARAM)){
-  DA_ELIMINARE<-c("5616_1","5616_3","5649_1")    
+  DA_ELIMINARE<-c("14354_1")    
 }else{
   stop("Parametro non riconosciuto!")
 }

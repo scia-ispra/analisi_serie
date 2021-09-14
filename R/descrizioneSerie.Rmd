@@ -8,14 +8,14 @@ params:
   distanza_elevation: 100
   da_eliminare: ""
   file_input: "serie controllate"
-  regione: "Emilia Romagna"
+  regione: ""
   param: ""
 ---
 
 
 ```{r setup,echo=FALSE,error=FALSE,include=FALSE,warning=FALSE,message=FALSE}
 #Programma per trovare possibili associazioni fra serie limitrofe (serie da unire e quindi da omogeneizzare)
-#31 agosto 2021
+#13 settembre 2021
 
 
 #Questo programma serve a identificare le serie sufficientemente lunghe per la stima dei trend e per il calcolo dei climatologici 1991-2020. Il
@@ -56,6 +56,7 @@ library("visdat")
 library("downloadthis")
 library("knitr")
 library("DT")
+library("crosstalk")
 annoI<-1961
 annoF<-2020
 
@@ -301,6 +302,7 @@ if(nrow(stazioniVicine)){
                annoFineSerie=anni[annoFineSerie],
                primo_anno_valido.x=anni[primo_anno_valido1],
                primo_anno_valido.y=anni[primo_anno_valido2],
+               primo_anno_valido_min=min(primo_anno_valido.x,primo_anno_valido.y,na.rm=TRUE),
                temp=max(ultimo_anno_valido.x,ultimo_anno_valido.y))->meta1
         
         nomeSerie<-.y
@@ -316,6 +318,7 @@ if(nrow(stazioniVicine)){
                annoFineSerie=anni[annoFineSerie],
                primo_anno_valido.x=anni[primo_anno_valido1],
                primo_anno_valido.y=anni[primo_anno_valido2],
+               primo_anno_valido_min=min(primo_anno_valido.x,primo_anno_valido.y,na.rm=TRUE),
                temp=max(ultimo_anno_valido.x,ultimo_anno_valido.y))->meta2
         
         return(bind_rows(meta1,meta2))
@@ -333,6 +336,7 @@ if(nrow(stazioniVicine)){
              annoFineSerie=anni[annoFineSerie],
              primo_anno_valido.x=anni[primo_anno_valido1],
              primo_anno_valido.y=anni[primo_anno_valido2],
+             primo_anno_valido_min=min(primo_anno_valido.x,primo_anno_valido.y,na.rm=TRUE),
              temp=max(ultimo_anno_valido.x,ultimo_anno_valido.y))
       
     })->metaInfo
@@ -449,19 +453,27 @@ if(nrow(stazioniVicine)){
       
       if(is.null(ris)) return()
       
-      #print(plot(ydati2[,c(.x)],main=.x))
     
-      .x
+      list(codice=.x,ai=primoAnnoValido,af=ultimoAnnoValido)
       
-    })->codiciSerieValide
+    })->lista_codiciSerieValide
 
     #codiciSerieValide contiene solo i codici di serie che hanno delle serie limitrofe nel raggio di tot kilometri (params$distanza)
     #vanno poi verificate le serie che non hanno limitrofe nel raggio stabilito da "distanza" ma che possono essere ccomunque valide.
-    purrr::compact(codiciSerieValide)->codiciSerieValide
+    purrr::compact(lista_codiciSerieValide)->lista_codiciSerieValide
 
-    if(length(codiciSerieValide)){
+    if(length(lista_codiciSerieValide)){
   
-      unlist(codiciSerieValide)->codiciSerieValide
+      purrr::map_chr(lista_codiciSerieValide,"codice")->codiciSerieValide
+      anni[purrr::map_dbl(lista_codiciSerieValide,"ai")]->ai_codiciSerieValide
+      anni[purrr::map_dbl(lista_codiciSerieValide,"af")]->af_codiciSerieValide
+      
+      #questo va qui prima di setdidd
+      info_serie_limitrofe<-tibble(SiteID=str_remove(codiciSerieValide,"_.+"),annoInizio=ai_codiciSerieValide,annoFine=af_codiciSerieValide,tipo=NA)
+      
+      info_serie_limitrofe %>%
+        mutate(tipo=ifelse(SiteID %in% newAna$SiteID,"site1",NA)) %>%
+        mutate(tipo=ifelse(SiteID %in% newAna$SiteID2,"site2",tipo))->info_serie_limitrofe
 
       newAna %>%
         filter(nomeSerieUnione %in% codiciSerieValide)->newAna
@@ -474,6 +486,7 @@ if(nrow(stazioniVicine)){
       
       newAna %>%
         filter(nomeSerieUnione %in% codiciSerieValide)->newAna
+
 
   
     }else{
@@ -515,18 +528,27 @@ purrr::map(.x=codiciSerieSenzaLimitrofe,.f=function(.x){
   
   if(is.null(ris)) return()
 
-  .x
+  list(codice=.x,ai=primoAnnoValido,af=ultimoAnnoValido)
   
-})->codiciSerieValideSenzaLimitrofe
+})->lista_codiciSerieValideSenzaLimitrofe
 
 #codiciSerieValide contiene solo i codici di serie che hanno delle serie limitrofe nel raggio di tot kilometri (params$distanza)
 #vanno poi verificate le serie che non hanno limitrofe nel raggio stabilito da "distanza" ma che possono essere ccomunque valide.
-purrr::compact(codiciSerieValideSenzaLimitrofe)->codiciSerieValideSenzaLimitrofe
+purrr::compact(lista_codiciSerieValideSenzaLimitrofe)->lista_codiciSerieValideSenzaLimitrofe
 
-if(!length(codiciSerieValideSenzaLimitrofe)){
+if(!length(lista_codiciSerieValideSenzaLimitrofe)){
+  
   codiciSerieValideSenzaLimitrofe<-NULL
+  
 }else{
-  unlist(codiciSerieValideSenzaLimitrofe)->codiciSerieValideSenzaLimitrofe
+  
+  purrr::map_chr(lista_codiciSerieValideSenzaLimitrofe,"codice")->codiciSerieValideSenzaLimitrofe
+  anni[purrr::map_dbl(lista_codiciSerieValideSenzaLimitrofe,"ai")]->ai_codiciSerieValideSenzaLimitrofe
+  anni[purrr::map_dbl(lista_codiciSerieValideSenzaLimitrofe,"af")]->af_codiciSerieValideSenzaLimitrofe  
+  
+  info_serie_senzalimitrofe<-tibble(SiteID=codiciSerieValideSenzaLimitrofe,annoInizio=ai_codiciSerieValideSenzaLimitrofe,annoFine=af_codiciSerieValideSenzaLimitrofe,tipo="sito3")
+      
+
 }
 #A questo punto ho:
 # - codiciSerieValide ( i codici delle serie limitrofe/unione valide)
@@ -622,6 +644,9 @@ Quando due serie limitrofe si sovrappongono completamente dal punto di vista tem
 
 ```
 
+
+
+
 ```{r,eval=CODICI_SERIE_VALIDE,echo=FALSE,message=FALSE,include=FALSE}
 table(newAna$SiteID)->tabellaID
 names(tabellaID)[tabellaID>1]-> codici_id_ripetuti
@@ -635,10 +660,10 @@ ifelse(length(codici_id2_ripetuti),TRUE,FALSE)->CODICI_ID2_RIPETUTI
 ```{asis,echo=CODICI_ID_RIPETUTI}
 #### Codici SiteID ripetuti
 
-⛔️ I codici  che seguono vanno eliminati dai risultati intervenendo sul programma!
+⛔️ I codici  che seguono vanno eliminati dai risultati intervenendo manualmente sul programma (mediante il vettore `DA_ELIMINARE`)!
   
   
-```
+  ```
 
 ```{r,eval=CODICI_ID_RIPETUTI,echo=FALSE,message=FALSE,include=TRUE,class.output='bg-warning'}
 print(codici_id_ripetuti)
@@ -648,17 +673,18 @@ print(codici_id_ripetuti)
 #### Codici SiteID2 ripetuti
 
 ⛔️ I codici  che seguono vanno eliminati dai risultati intervenendo sul programma!
-
-
   
-```
+  
+  
+  ```
 
 ```{r,eval=CODICI_ID2_RIPETUTI,echo=FALSE,message=FALSE,include=TRUE,class.output='bg-warning'}
 print(codici_id2_ripetuti)
 ```
 
 <br>
-
+  
+  
 ```{r tabella,include=TRUE,echo=FALSE,message=FALSE,warning=FALSE,eval=CODICI_SERIE_VALIDE}
 newAna %>%
   mutate(serie_lunga=ifelse((primo_anno_valido.x<1980) |(primo_anno_valido.y<1980),1,0))->newAna
@@ -667,19 +693,60 @@ datatable(newAna %>% dplyr::select(-matches("label"),-matches("County"))) %>%
   formatStyle(columns = "serie_lunga",target="row",backgroundColor = styleEqual(c(0,1),c("white","lightgreen")))
 ```  
 
+<br><br>
+
 ### Anagrafica serie valide
 
 Qui e' possibile scaricare l'anagrafica di tutte le serie identificate come potenzialmente utili al calcolo dei climatologici 1991-2020 e/o al calcolo dei trend di lungo periodo. Questa anagrafica include la selezione finale di tutte le serie (che abbiano serie limitrofe o meno).
 
-```{r,include=TRUE,message=FALSE,warning=FALSE,echo=FALSE}
+Selezionando uno o piu' righe (cliccando con il mouse sulle righe di interesse della tabella) vengono automaticamente filtrate le stazioni sulla mappa. Ad esempio, per selezionare le serie che iniziano dal 1961, cercare mediante il box di testo 1961, quindi selezionare con il mouse le righe trovate. Ricordarsi di deselezionare le righe della tabella prima di iniziare una nuova selezione.
+
+```{r,include=TRUE,message=FALSE,warning=FALSE,echo=FALSE,error=FALSE}
 #anagrafica di tutte le serie 
 c(codiciSerieValide,codiciSerieValideSenzaLimitrofe)->codiciTutti
 codiciTutti[!is.null(codiciTutti)]->codiciTutti
 str_remove(codiciTutti,"_.+$")->temp
 
-datatable(ana %>% filter(SiteID %in% temp))
 
-downloadthis::download_this(ana %>% filter(SiteID %in% temp),output_name=glue::glue("{PARAM}.{REGIONE}.anagrafica.stazioni_valide"),output_extension=".csv",button_label="Scarica anagrafica")
+ana %>% filter(SiteID %in% temp)->subana
+
+if(!is.null(codiciSerieValide) & !is.null(codiciSerieValideSenzaLimitrofe)){
+  
+left_join(info_serie_limitrofe,newAna %>% mutate(nomeSerieUnione=str_remove(nomeSerieUnione,"_.+")) %>% dplyr::select(nomeSerieUnione,primo_anno_valido_min),by=c("SiteID"="nomeSerieUnione")) %>%
+    mutate(annoInizio=primo_anno_valido_min) %>% dplyr::select(-primo_anno_valido_min)->info_serie_limitrofe
+  
+left_join(subana %>% filter(SiteID %in% info_serie_limitrofe$SiteID),info_serie_limitrofe,by="SiteID")->subana1
+left_join(subana %>% filter(SiteID %in% info_serie_senzalimitrofe$SiteID),info_serie_senzalimitrofe,by="SiteID")->subana2
+
+bind_rows(subana1,subana2)->subana
+  
+}
+
+if(!is.null(codiciSerieValide) & is.null(codiciSerieValideSenzaLimitrofe)){
+
+ 
+left_join(info_serie_limitrofe,newAna %>% mutate(nomeSerieUnione=str_remove(nomeSerieUnione,"_.+")) %>% dplyr::select(nomeSerieUnione,primo_anno_valido_min),by=c("SiteID"="nomeSerieUnione")) %>%
+    mutate(annoInizio=primo_anno_valido_min) %>% dplyr::select(-primo_anno_valido_min)->info_serie_limitrofe  
+  
+left_join(subana %>% filter(SiteID %in% info_serie_limitrofe$SiteID),info_serie_limitrofe,by="SiteID")->subana
+  
+}
+
+if(is.null(codiciSerieValide) & !is.null(codiciSerieValideSenzaLimitrofe)){
+  
+left_join(subana %>% filter(SiteID %in% info_serie_senzalimitrofe$SiteID),info_serie_senzalimitrofe,by="SiteID")->subana
+  
+}
+
+subana %>% distinct(SiteID,.keep_all = TRUE)->subana
+
+crosstalk::SharedData$new(subana)->anacross
+
+
+
+datatable(anacross)
+
+downloadthis::download_this(subana,output_name=glue::glue("{PARAM}.{REGIONE}.anagrafica.stazioni_valide"),output_extension=".csv",button_label="Scarica anagrafica")
 
 
 daScrivere<-NULL
@@ -692,90 +759,75 @@ write_delim(daScrivere,file=glue::glue("{PARAM}.{REGIONE}.serie_valide.csv"),del
 ```
 
 <hr>
+  
+  ## Disponibilità dati
+  
+  Il grafico sulla disponibilità dei dati rappresenta i dati aggregati a livello annuale. Il `grigio` corrisponde a undato disponibile, il `nero` corrisponde a un dato mancante. Ogni colonna rappresenta una serie di dati annuali dal `r annoI` (parte alta del grafico) a `r annoF` (in basso).
 
-## Disponibilità dati
 
-Il grafico sulla disponibilità dei dati rappresenta i dati aggregati a livello annuale. Il `grigio` corrisponde a undato disponibile, il `nero` corrisponde a un dato mancante. Ogni colonna rappresenta una serie di dati annuali dal `r annoI` (parte alta del grafico) a `r annoF` (in basso).
+
 
 
 ```{asis,echo=CODICI_SERIE_VALIDE}
 
 <br>
   
-### Serie con stazioni limitrofe
+  ### Serie con stazioni limitrofe
   
-<br>
+  <br>
 ```
+
 
 ```{r vismiss,include=TRUE,echo=FALSE,message=FALSE,warning=FALSE,fig.height=8, fig.width=10,eval=CODICI_SERIE_VALIDE}
 print(vis_miss(as.data.frame(ydati2[,codiciSerieValide])))
 ```
 
+
 ```{asis,echo=CODICI_SERIE_VALIDE_SENZA_LIMITROFE}
 
 <br>
   
-### Serie senza stazioni limitrofe
+  ### Serie senza stazioni limitrofe
   
 <br>
+  
 ```
 
-```{r vismiss2,include=TRUE,echo=FALSE,message=FALSE,warning=FALSE,fig.height=8, fig.width=10,eval=CODICI_SERIE_VALIDE_SENZA_LIMITROFE}
+```{r vismiss2,include=TRUE,echo=FALSE,message=FALSE,warning=FALSE,fig.height=8,fig.width=10,eval=CODICI_SERIE_VALIDE_SENZA_LIMITROFE}
 print(vis_miss(as.data.frame(ydati[,codiciSerieValideSenzaLimitrofe])))
 ```
 
 <hr>
-
-### Distribuzione spaziale delle serie identificate
-
-In blu e in rosso sono identificate le stazioni identificate come "valide" fra quelle che hanno una stazione limitrofa nel raggio di `r params$distanza/1000` km.
+  
+  ### Distribuzione spaziale delle serie identificate
+  
+  In blu e in rosso sono identificate le stazioni identificate come "valide" fra quelle che hanno una stazione limitrofa nel raggio di `r params$distanza/1000` km.
 
 In verde sono riportate le stazioni identificate come "valide" prive di stazioni limitrofe nel raggio di `r params$distanza/1000` km.
 
 <br>
-
-
+  
+  
 ```{r mappa_serie_associate, echo=FALSE, fig.height=8, fig.width=10, message=FALSE, warning=FALSE, include=TRUE}
-
-if(is.null(codiciSerieValide)){
-
-leaflet() %>%
-  leaflet::addTiles() %>%
-  leaflet::addCircleMarkers(data=ana %>% filter(SiteID %in% codiciSerieValideSenzaLimitrofe),lng = ~Longitude,lat=~Latitude,color = "red",label = ~SiteID)
-  
-}
-
-if(is.null(codiciSerieValideSenzaLimitrofe)){
+colori <- colorFactor(palette=c("#0000cc", "#cc0000","#00cc00"), domain = subana$tipo,na.color="yellow")
 
 leaflet() %>%
   leaflet::addTiles() %>%
-  leaflet::addCircleMarkers(data=ana %>% filter(SiteID %in% str_remove(newAna$SiteID2,"_+")),lng = ~Longitude,lat=~Latitude,color = "red",label = ~SiteID) %>%
-  leaflet::addCircleMarkers(data=ana %>% filter(SiteID %in% str_remove(newAna$SiteID,"_+")),lng = ~Longitude,lat=~Latitude,color = "blue",label = ~SiteID)  
-  
-}
-
-if(!is.null(codiciSerieValideSenzaLimitrofe) & !is.null(codiciSerieValide)){
-
-leaflet() %>%
-  leaflet::addTiles() %>%
-  leaflet::addCircleMarkers(data=ana %>% filter(SiteID %in% str_remove(newAna$SiteID2,"_+")),lng = ~Longitude,lat=~Latitude,color = "red",label = ~SiteID) %>%
-  leaflet::addCircleMarkers(data=ana %>% filter(SiteID %in% str_remove(newAna$SiteID,"_+")),lng = ~Longitude,lat=~Latitude,color = "blue",label = ~SiteID) %>%
-  leaflet::addCircleMarkers(data=ana %>% filter(SiteID %in% codiciSerieValideSenzaLimitrofe),lng = ~Longitude,lat=~Latitude,color = "green",label = ~SiteID)  
-  
-}
+  leaflet::addCircleMarkers(data=anacross,lng=~Longitude,lat=~Latitude,color = ~colori(tipo),label=~SiteID)
 ```
 
 <hr>
-
+  
 ### Grafici serie
 
 ```{asis,echo=CODICI_SERIE_VALIDE}
 
 <br>
-
-#### Serie valide (serie con stazioni limitrofe)
+  
+  #### Serie valide (serie con stazioni limitrofe)
   
 <br>
+  
 ```
 
 
@@ -794,9 +846,9 @@ purrr::walk(.x=codiciSerieValide,.f=function(.x){
 ```{asis,echo=CODICI_SERIE_VALIDE_SENZA_LIMITROFE}
 
 <br>
-
-#### Serie valide (serie con stazioni limitrofe)
-
+  
+  #### Serie valide (serie senza stazioni limitrofe)
+  
 <br>
 ```
 
