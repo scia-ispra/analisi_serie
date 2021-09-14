@@ -10,6 +10,13 @@ Analisi dei risultati per l'identificazione delle serie di temperatura e precipi
 - calcolo dei valori climatologici
 - calcolo dei trend di lungo periodo
 
+## Aeronautica
+
+- [precipitazione](./aeronautica/prcp.aeronautica.descrizioneSerie.html)
+- [tmax](./aeronautica/tmax.aeronautica.descrizioneSerie.html)
+- [tmin](./aeronautica/tmin.aeronautica.descrizioneSerie.html)
+
+
 ### Emilia Romagna
 
 - [precipitazione](./emiliaromagna/prcp.emiliaromagna.descrizioneSerie.html)
