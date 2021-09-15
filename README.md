@@ -28,6 +28,11 @@
 - Precipitazione: 7 serie storiche (dal 1961) **ma che terminano nel 2019**. Sembrano inoltre mancanti anche i dati del 2916/2015. Verificare.
 - Temperatura: 7 serie storiche (dal 1961) **ma che terminano nel 2019**. Sembrano inoltre mancanti anche i dati del 2916/2015. Verificare.
 
+## Marche
+
+- Precipitazione: individuate 54 serie di lungo periodo. **Molte serie mancano dei dati del 2017/2018**
+- Temperatura: estendere il raggio di ricerca a 5 km per trovare l'associazione tra Pesaro e Villa Fastiggi. Individuate 15 serie di cui 13 di lungo periodo.
+
 ## Piemonte
 
 - Manca tutto il 2017: **caricarlo su SCIA**
