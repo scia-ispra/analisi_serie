@@ -12,6 +12,10 @@
 - Precipitazione: 38 potenziali serie storiche (1961 -  2020) per trend di lungo periodo e climatologici
 - Temperatura: 92 potenziali serie storiche (1961 - 2020) per trend di lungo periodo e climatologici
 
+## Campania
+
+- Precipitazione e temperatura: serie che partono dal 2000!
+
 ## Emilia Romagna
 
 - Precipitazione: 12 serie storiche dal 1961
