@@ -54,6 +54,12 @@ Analisi dei risultati per l'identificazione delle serie di temperatura e precipi
 - [tmax](./piemonte/tmax.piemonte.descrizioneSerie.html)
 - [tmin](./piemonte/tmin.piemonte.descrizioneSerie.html)
 
+### Puglia
+
+- [precipitazione](./puglia/prcp.puglia.descrizioneSerie.html)
+- [tmax](./puglia/tmax.puglia.descrizioneSerie.html)
+- [tmin](./puglia/tmin.puglia.descrizioneSerie.html)
+
 ### Veneto
 
 - [precipitazione](./veneto/prcp.veneto.descrizioneSerie.html)
