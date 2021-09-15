@@ -17,6 +17,11 @@
 - Precipitazione: 12 serie storiche dal 1961
 - Temperatura: 6 serie storiche dal 1961
 
+## Lazio
+
+- Precipitazione: individuate 24 serie, di cui 20 potenzialmente utili per trend di lungo periodo (1961-2020)
+- Temperatura: individuate 22 serie di cui 12 potenzialmente utili per trend di lungo periodo (1961-2020)
+
 ## Lombardia
 
 - Precipitazione e temperatura: **per trovare serie limitrofe e' necessario estendere il raggio di ricerca oltre 5 km, per trovare associazioni utili anche a distanze di 6/7 km++
