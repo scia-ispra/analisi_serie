@@ -4,7 +4,7 @@ date: '`r Sys.Date()`'
 output: html_document
 author: Guido
 params:
-  distanza: 2000
+  distanza: 5000
   distanza_elevation: 100
   da_eliminare: ""
   file_input: "serie controllate"
@@ -131,6 +131,11 @@ if(params$file_input=="serie raw"){
   
 }
 
+#anagrafica
+read_delim(FILE.ANAGRAFICA,delim=";",col_names = TRUE)->ana
+
+#teniamo solo i file che stanno in anagrafica: ad esempio per l'Abruzzo alcuni file non stanno in anagrafica
+dati[,c("yy","mm","dd",base::intersect(names(dati),ana$SiteID))]->dati
 
 ncol(dati)-3->NUMERO_SERIE
 
@@ -184,20 +189,24 @@ if(!length(stazioniLunghe)) stop(glue::glue("Non ci sono serie con almeno {NUMER
 #Nel secondo caso creiamo una serie "unione": si tratta di una serie che ha nella sua parte iniziale i valori della serie A per poi terminare
 #con i valori della serie B limitrofa. Le serie "unione" ci permettono di preseguire serie storiche.
 
-read_delim(FILE.ANAGRAFICA,delim=";") %>%
+ana %>%
   mutate(SiteID=as.character(SiteID)) %>%
-  filter(SiteID %in% names(stazioniLunghe))->ana
+  filter(SiteID %in% names(stazioniLunghe)) %>%
+  mutate(nome_rete="NESSUNA INFORMAZIONE RETE")->ana
 
 
 #se manca qualcuno di questi dati il programma si blocca
 which(is.na(ana$Elevation))->righe
-stopifnot(!length(righe))
+print("Attenzione Elevation missing in ana")
+if(length(righe)) ana[-righe,]->ana
 
 which(is.na(ana$Longitude))->righe
-stopifnot(!length(righe))
+print("Attenzione Longitude missing in ana")
+if(length(righe)) ana[-righe,]->ana
 
 which(is.na(ana$Latitude))->righe
-stopifnot(!length(righe))
+print("Attenzione Latitude missing in ana")
+if(length(righe)) ana[-righe,]->ana
 
 st_as_sf(ana,coords=c("Longitude","Latitude"),crs=4326)->sfAna
 st_transform(sfAna,crs=32632)->sfAna
@@ -553,7 +562,7 @@ if(!length(lista_codiciSerieValideSenzaLimitrofe)){
 #A questo punto ho:
 # - codiciSerieValide ( i codici delle serie limitrofe/unione valide)
 # - codiciSerieValideSenzaLimitrofe (codici delle serie valide ma che non hanno stazioni limitrofe)
-
+if(!exists("codiciSerieValide")) {codiciSerieValide<-NULL; CODICI_SERIE_VALIDE<-FALSE; CODICI_ID_RIPETUTI<-FALSE; CODICI_ID2_RIPETUTI<-FALSE}
 if(is.null(codiciSerieValide) & is.null(codiciSerieValideSenzaLimitrofe)) stop("NOn ci sono serie valide per questo dataset!")
 
 ifelse(length(codiciSerieValide),TRUE,FALSE)->CODICI_SERIE_VALIDE
