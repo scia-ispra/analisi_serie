@@ -44,6 +44,11 @@
 
 👉  **Trovare un contatto con l'ARPA Piemonte e spiegare la nostra esigenza di avere serie dal 1961 fino, almeno, al 1985/1990 distribuite sul territorio.**
 
+## Puglia
+
+- Tutte le serie di temperatura e precipitazione partono dal 1995. **Mancano dati storici**
+- Precipitazione: individuate 115 serie per calcolo climatologici
+- Temperatura: individuate circa 80 serie per calcolo climatologici 
 
 ## Veneto
 
