@@ -28,7 +28,7 @@
 
 ## Lombardia
 
-- Precipitazione e temperatura: **per trovare serie limitrofe e' necessario estendere il raggio di ricerca oltre 5 km, per trovare associazioni utili anche a distanze di 6/7 km++
+- Precipitazione e temperatura: **per trovare serie limitrofe e' necessario estendere il raggio di ricerca oltre 5 km, per trovare associazioni utili anche a distanze di 6/7 km**
 - Precipitazione: 7 serie storiche (dal 1961) **ma che terminano nel 2019**. Sembrano inoltre mancanti anche i dati del 2916/2015. Verificare.
 - Temperatura: 7 serie storiche (dal 1961) **ma che terminano nel 2019**. Sembrano inoltre mancanti anche i dati del 2916/2015. Verificare.
 
