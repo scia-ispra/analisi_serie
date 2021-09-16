@@ -61,6 +61,17 @@
 - Precipitazione: individuate 115 serie per calcolo climatologici
 - Temperatura: individuate circa 80 serie per calcolo climatologici 
 
+
+## Sicilia
+
+- Precipitazione: le serie delle rete Osservatorio Acque terminano tutte nel 2018. Dovrebbero essere disponibili anche gli anni piu' recenti. Sono stati caricati?
+- Temperatura minima e massima: i dati si fermano al 2015. Dati al 2020 sono disponibili per le stazioni della rete SIAS.
+
+## Toscana
+
+- Precipitazione: individuate 123 serie utili di cui circa 83 utili per la stima dei trend di lungo periodo
+- Temperatura massima e minima: individuate 21 serie di 9 utili per la stima dei trend di lungo periodo
+
 ## Veneto
 
 - 👉 Per ciascuna stazione dell'ARPA Veneto c'è una corrispondente stazione limitrofa della "Rete Temporanea Veneto". **Che rete è**?
@@ -68,12 +79,6 @@
 - Serie di lungo periodo per Rapporto Indicatori: 
   - almeno 15 serie di precipitazione
   - **nessuna serie di temperatura**
-
-## Sicilia
-
-- Precipitazione: le serie delle rete Osservatorio Acque terminano tutte nel 2018. Dovrebbero essere disponibili anche gli anni piu' recenti. Sono stati caricati?
-- Temperatura minima e massima: i dati si fermano al 2015. Dati al 2020 sono disponibili per le stazioni della rete SIAS.
-
 
  
 
