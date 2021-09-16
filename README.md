@@ -12,6 +12,12 @@
 - Precipitazione: 38 potenziali serie storiche (1961 -  2020) per trend di lungo periodo e climatologici
 - Temperatura: 92 potenziali serie storiche (1961 - 2020) per trend di lungo periodo e climatologici
 
+## Calabria
+
+- Precipitazione: individuate 60 serie di cui 50 potenzialmente utili per il calcolo dei trend di lungo periodo
+- Temperatura massima: individuate 50 serie di cui 11 potenzialmente utili per il calcolo dei trend di lungo periodo
+- Temperatura minima: individuate 50 serie di cui 11 potenzialmente utili per il calcolo dei trend di lungo periodo
+
 ## Campania
 
 - Precipitazione e temperatura: serie che partono dal 2000!
