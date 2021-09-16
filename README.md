@@ -21,6 +21,13 @@
 - Precipitazione: 12 serie storiche dal 1961
 - Temperatura: 6 serie storiche dal 1961
 
+## Friuli Venezia Giulia
+
+**Si tratta di serie unite già a novembre 2020 utilizzando le serie del sito FVG (disponibili online) con i dati storici disponibili. Le associazioni sono state cercate fino a 5km di distanza**
+
+- Precipitazione: individuate 22 serie, di cui 20 potenzialmente utili per i trend di lungo periodo
+- Temperatura massima e minima: individuate 12 serie di cui 7 potenzialmente utili per i trend di lungo periodo
+
 ## Lazio
 
 - Precipitazione: individuate 24 serie, di cui 20 potenzialmente utili per trend di lungo periodo (1961-2020)
