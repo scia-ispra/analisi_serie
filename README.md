@@ -78,6 +78,11 @@
 - Precipitazione: individuate 123 serie utili di cui circa 83 utili per la stima dei trend di lungo periodo
 - Temperatura massima e minima: individuate 21 serie di 9 utili per la stima dei trend di lungo periodo
 
+## Umbria
+
+- Precipitazione: indetificate 23 serie, di cui 7 di lungo periodo. Per identificare tutte queste serie si e' dovuta abbassare la paercentuale di dati disponibili dall'80% al 70%
+- Temperatura: tutte le serie partono dal 2004, non prima! Il 2014 sembra essere totalmente mancante.
+
 ## Veneto
 
 - 👉 Per ciascuna stazione dell'ARPA Veneto c'è una corrispondente stazione limitrofa della "Rete Temporanea Veneto". **Che rete è**?
