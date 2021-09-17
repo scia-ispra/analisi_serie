@@ -12,6 +12,12 @@
 - Precipitazione: 38 potenziali serie storiche (1961 -  2020) per trend di lungo periodo e climatologici
 - Temperatura: 92 potenziali serie storiche (1961 - 2020) per trend di lungo periodo e climatologici
 
+## Basilicata
+
+- Precipitazione: indviduate 10 serie di cui 6 che partono dal 1961. Per identificare le serie si e' dovuto abbassare il livello di completezza dall'80% al 70%
+- Temperatura massima e minima: indviduate 9 serie di cui 1 che parte dal 1961. Per identificare le serie si e' dovuto abbassare il livello di completezza dall'80% al 70%
+
+
 ## Calabria
 
 - Precipitazione: individuate 60 serie di cui 50 potenzialmente utili per il calcolo dei trend di lungo periodo
