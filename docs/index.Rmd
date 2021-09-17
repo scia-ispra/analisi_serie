@@ -22,6 +22,12 @@ Analisi dei risultati per l'identificazione delle serie di temperatura e precipi
 - [tmax](./aeronautica/tmax.aeronautica.descrizioneSerie.html)
 - [tmin](./aeronautica/tmin.aeronautica.descrizioneSerie.html)
 
+## Basilicata
+
+- [precipitazione](./basilicata/prcp.basilicata.descrizioneSerie.html)
+- [tmax](./basilicata/tmax.basilicata.descrizioneSerie.html)
+- [tmin](./basilicata/tmin.basilicata.descrizioneSerie.html)
+
 ## Calabria
 
 - [precipitazione](./calabria/prcp.calabria.descrizioneSerie.html)
