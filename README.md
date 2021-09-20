@@ -17,6 +17,10 @@
 - Precipitazione: indviduate 10 serie di cui 6 che partono dal 1961. Per identificare le serie si e' dovuto abbassare il livello di completezza dall'80% al 70%
 - Temperatura massima e minima: indviduate 9 serie di cui 1 che parte dal 1961. Per identificare le serie si e' dovuto abbassare il livello di completezza dall'80% al 70%
 
+## Bolzano
+
+- Precipitazione: individuate 23 serie di cui 17 potenzialmente utili al calcolo della stima dei trend di lungo periodo
+- Tmax e Tmin: individuate 22 serie di cui 10 potenzialmente utili al calcolo dei trend di lungo periodo. 
 
 ## Calabria
 
@@ -73,11 +77,17 @@
 - Precipitazione: individuate 115 serie per calcolo climatologici
 - Temperatura: individuate circa 80 serie per calcolo climatologici 
 
-
 ## Sicilia
 
 - Precipitazione: le serie delle rete Osservatorio Acque terminano tutte nel 2018. Dovrebbero essere disponibili anche gli anni piu' recenti. Sono stati caricati?
 - Temperatura minima e massima: i dati si fermano al 2015. Dati al 2020 sono disponibili per le stazioni della rete SIAS.
+
+## Trentino
+
+- Precipitazione: individuate 37 serie di cui 27 utili per il calcolo dei trend di lungo periodo
+- Temperatura massima: individuate 32 serie di cui 12 utili per il calcolo dei trend di lungo periodo
+- Temperatura minima: individuate 33 serie di cui 12 utili per il calcolo dei trend di lungo periodo
+
 
 ## Toscana
 
@@ -88,6 +98,11 @@
 
 - Precipitazione: indetificate 23 serie, di cui 7 di lungo periodo. Per identificare tutte queste serie si e' dovuta abbassare la paercentuale di dati disponibili dall'80% al 70%
 - Temperatura: tutte le serie partono dal 2004, non prima! Il 2014 sembra essere totalmente mancante.
+
+## Valle d'Aosta
+
+- Precipitazione: individuate 2 serie di cui 1 utile per la stima dei trend di lungo periodo
+- Temperatura: individuate 7 serie. La piu' vecchia inizia nel 1970. **Provare a far rigirare il programma allentando qualche criterio di completezza**
 
 ## Veneto
 
