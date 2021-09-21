@@ -49,6 +49,12 @@
 - Precipitazione: individuate 24 serie, di cui 20 potenzialmente utili per trend di lungo periodo (1961-2020)
 - Temperatura: individuate 22 serie di cui 12 potenzialmente utili per trend di lungo periodo (1961-2020)
 
+## Liguria
+
+- Precipitazione: individuate 23 serie di cui 21 potenzialmente utili ai trend di lungo periodo. **Attenzione: 11 di queste serie finiscono al 2019**
+- Tmax: individuate 11 serie di cui almeno 9 potenzialmente utili al trend di lungo periodo. **Attenzione: 7 di queste serie finiscono al 2019**
+- Tmin: individuate 11 serie di cui almeno 9 potenzialmente utili al trend di lungo periodo. **Attenzione: 7 di queste serie finiscono al 2019**
+
 ## Lombardia
 
 - Precipitazione e temperatura: **per trovare serie limitrofe e' necessario estendere il raggio di ricerca oltre 5 km, per trovare associazioni utili anche a distanze di 6/7 km**
