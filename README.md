@@ -9,6 +9,7 @@
 | Puglia   | Inviata mail per chiedere dati antecedenti al 1990. A questa mail ha risposto Franco Intini della Protezione Civile della Puglia dicendo che questi dati non esistono in formato digitale. |
 | Sardegna | Aspettare invio dati da parte di Michele Fiori |
 | Sicilia  | **Caricare su SCIA dati passati da Guido per il 2020 (ricaricare anche 2019?) e ripassare i dati a Guido** |
+| Veneto   | **Mancano dati di temperatura antecedenti al 1992. Sul database compare la rete TEMP. In generale questa rete andrebbe assorbita dalle reti ufficiali, non solo per il Veneto** |
 
 
 ---
@@ -134,9 +135,8 @@ Questi risultati si riferiscono alle serie che Guido utilizza per il Rapporto Gl
 
 - 👉 Per ciascuna stazione dell'ARPA Veneto c'è una corrispondente stazione limitrofa della "Rete Temporanea Veneto". **Che rete è**?
 - Le serie di temperatura identificate per il calcolo dei climatologici appartengono alla rete Idrografica. La rete Idrografica non compare per le serie di precipitazione. La rete Regionale e la rete Temporanea Veneto non compaiono per i dati di temperatura. **Perche' questa discrepanza**?
-- Serie di lungo periodo per Rapporto Indicatori: 
-  - almeno 15 serie di precipitazione
-  - **nessuna serie di temperatura**
+- Precipitazione: individuate 48 serie utili, 18 di lungo periodo (1961 - 2020)
+- Tmax e Tmin: individuate 8 serie. **NOn abbiamo dati antecedenti al 1992.**
 
  
 
