@@ -1,7 +1,7 @@
 | Regione  | Da Fare |
 |----------| ------- |
 | Abruzzo  | Inviata mail per chiedere se esistono in formato digitale i dati antecedenti al 1974. |
-| Piemonte | Caricare su SCIA dati 2017 e ripassare dati a Guido |
+| Piemonte | <style="color: red">Caricare su SCIA dati 2017 e ripassare dati a Guido</style> |
 | Sicilia  | Caricare su SCIA dati passati da Guido per il 2020 (ricaricare anche 2019?) e ripassare i dati a Guido |
 | Liguria  | Provare a chiedere i dati per il periodo 2000 - 2010 ? |
 | Puglia   | Inviata mail per chiedere dati antecedenti al 1990. A questa mail ha risposto Franco Intini della Protezione Civile della Puglia dicendo che questi dati non esistono in formato digitale.
