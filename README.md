@@ -87,8 +87,11 @@
 
 ## Sicilia
 
-- Precipitazione: le serie delle rete Osservatorio Acque terminano tutte nel 2018. Dovrebbero essere disponibili anche gli anni piu' recenti. Sono stati caricati?
-- Temperatura minima e massima: i dati si fermano al 2015. Dati al 2020 sono disponibili per le stazioni della rete SIAS.
+Questi risultati si riferiscono alle serie che Guido utilizza per il Rapporto Gli Indicatori del Clima. Non include quindi le nuove stazioni che potrebbero allungare le serie storiche.
+
+- Precipitazione: ben 44 stazioni iniziano tra il 1961-1966. Tuttavia solo 10 stazioni terminano nel 2020, le restanti terminano tra il 2018 e 2019.
+- Tmax: individuate 25 serie. 19 serie iniziano tra il 1961 - 1963. 15 serie terminano nel 2020 mentre 10 serie terminano tra il 2018 e il 2019.
+- Tmin: individuate 24 serie. 18 serie iniziano tra il 1961 - 1963. 14 serie terminano nel 2020 mentre 10 serie terminano tra il 2018 e il 2019.
 
 ## Trentino
 
