@@ -2,11 +2,13 @@
 |----------| ------- |
 | Abruzzo  | Inviata mail per chiedere se esistono in formato digitale i dati antecedenti al 1974. |
 | Piemonte | **Caricare su SCIA dati 2017 e ripassare dati a Guido** |
-| Sicilia  | **Caricare su SCIA dati passati da Guido per il 2020 (ricaricare anche 2019?) e ripassare i dati a Guido** |
 | Liguria  | **Provare a chiedere i dati per il periodo 2000 - 2010 ?** |
+| Lombardia| **Chiedere i dati del 2020 per le serie storiche di temperatura e precipitazione identificate** |
+| Marche   | **Verificare su SCIA presenza dei dati per gli anni 2017/2018 ed eventualmente richiedere i dati** |
 | Molise   | I dati andrebbero richiesti per il periodo 1961 - 2020 su  tutte le serie disponibili. I dati a nostra disposizione non sono sovrapponibili con quelli 2014 - 2020 inviati dal Molise. Per la temperatura i dati che abbiamo copropno pochi anni. |
 | Puglia   | Inviata mail per chiedere dati antecedenti al 1990. A questa mail ha risposto Franco Intini della Protezione Civile della Puglia dicendo che questi dati non esistono in formato digitale. |
 | Sardegna | Aspettare invio dati da parte di Michele Fiori |
+| Sicilia  | **Caricare su SCIA dati passati da Guido per il 2020 (ricaricare anche 2019?) e ripassare i dati a Guido** |
 
 
 ---
