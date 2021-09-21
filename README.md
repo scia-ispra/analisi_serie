@@ -1,3 +1,11 @@
+| Regione  | Da Fare |
+|----------| ------- |
+| Piemonte | Caricare su SCIA dati 2017 e ripassare dati a Guido |
+|----------| ------- |
+
+
+---
+
 # Analisi_serie
 
 [Analisi delle serie per calcolo climatologici e serie di lungo periodo.](https://scia-ispra.github.io/analisi_serie/)
