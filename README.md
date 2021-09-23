@@ -128,8 +128,10 @@ Questi risultati si riferiscono alle serie che Guido utilizza per il Rapporto Gl
 
 ## Valle d'Aosta
 
-- Precipitazione: individuate 2 serie di cui 1 utile per la stima dei trend di lungo periodo
-- Temperatura: individuate 7 serie. La piu' vecchia inizia nel 1970. **Provare a far rigirare il programma allentando qualche criterio di completezza**
+**Per la Valle d'Aosta livello di completezza abbassato da 80 a 70%**
+
+- Precipitazione: individuate 3 serie di cui 2 utili per la stima dei trend di lungo periodo
+- Temperatura: individuate 9 serie. La piu' vecchia inizia nel 1970. *
 
 ## Veneto
 
