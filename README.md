@@ -1,3 +1,11 @@
+# Mappa stazioni identificate
+
+https://guidoispra.shinyapps.io/scia/
+
+---
+
+# Da Fare
+
 | Regione  | Da Fare |
 |----------| ------- |
 | Abruzzo  | Inviata mail per chiedere se esistono in formato digitale i dati antecedenti al 1974. |
