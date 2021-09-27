@@ -1,0 +1,49 @@
+SiteID;SiteName;SiteCode;Latitude;Longitude;Elevation;County;nome_rete;annoInizio;annoFine;tipo
+5675;Arabba;00003;46,49926;11,87637;1653;veneto;Regionale ARPA Veneto;1961;2020;site2
+5677;Caprile;00009;46,43977;11,99027;1076;veneto;Regionale ARPA Veneto;1961;2020;site2
+5678;Malga Ciapela;00011;46,42785;11,90510;1501;veneto;Regionale ARPA Veneto;1991;2020;site2
+5679;Gares (Canale d'Agordo);00015;46,31246;11,88295;1392;veneto;Regionale ARPA Veneto;1990;2020;site2
+5680;Agordo;00019;46,27609;12,03251;588;veneto;Regionale ARPA Veneto;1961;2019;site2
+5682;S. Antonio di Tortal;00022;46,04768;12,15469;568;veneto;Regionale ARPA Veneto;1961;2020;site2
+5683;Sospirolo;00025;46,14025;12,07977;363;veneto;Regionale ARPA Veneto;1987;2020;site2
+5696;Castana ;00068;45,81485;11,30868;485;veneto;Regionale ARPA Veneto;1990;2020;site2
+5698;Turcati Recoaro;00076;45,70329;11,18511;693;veneto;Regionale ARPA Veneto;1990;2020;site2
+5699;Recoaro 1000;00077;45,67982;11,22594;913;veneto;Regionale ARPA Veneto;1990;2020;site2
+5700;Valdagno;00079;45,63065;11,30894;248;veneto;Regionale ARPA Veneto;1961;2020;site2
+5703;Montecchio Precalcino;00083;45,65788;11,54816;71;veneto;Regionale ARPA Veneto;1994;2020;site2
+5704;San Bortolo;00087;45,60781;11,18168;814;veneto;Regionale ARPA Veneto;1992;2020;site2
+5705;Crespadoro;00088;45,62545;11,20952;513;veneto;Regionale ARPA Veneto;1961;2020;site2
+5706;Passo Monte Croce Comelico;00091;46,65148;12,42416;1667;veneto;Regionale ARPA Veneto;1987;2019;site2
+5707;Col Indes (Tambre);00092;46,11841;12,44035;1153;veneto;Regionale ARPA Veneto;1990;2020;site2
+5708;Torch (Pieve d'Alpago);00093;46,15086;12,36323;587;veneto;Regionale ARPA Veneto;1990;2020;site2
+5709;Pelizzare Bagnolo di Po';00096;44,98879;11,52975;7;veneto;Regionale ARPA Veneto;1990;2019;site2
+5711;San Bellino;00099;45,03073;11,57719;7;veneto;Regionale ARPA Veneto;1990;2020;site2
+5712;Conegliano Veneto;00100;45,88066;12,28254;71;veneto;Regionale ARPA Veneto;1993;2020;site2
+5713;Pradon Porto Tolle;00101;44,91663;12,36932;2;veneto;Regionale ARPA Veneto;1990;2020;site2
+5716;Lonigo;00105;45,38992;11,37990;31;veneto;Regionale ARPA Veneto;1961;2020;site2
+5717;Montagnana;00106;45,24286;11,46828;15;veneto;Regionale ARPA Veneto;1961;2020;site2
+5718;Salizzole;00108;45,23885;11,08626;22;veneto;Regionale ARPA Veneto;1993;2020;site2
+5720;Legnaro;00111;45,34669;11,95239;7;veneto;Regionale ARPA Veneto;1972;2020;site2
+5726;Sorga';00117;45,21726;11,00903;23;veneto;Regionale ARPA Veneto;1993;2020;site2
+5728;Roverchiara;00119;45,26514;11,25143;19;veneto;Regionale ARPA Veneto;1993;2020;site2
+5729;Dolcè;00120;45,59890;10,84901;112;veneto;Regionale ARPA Veneto;1961;2020;site2
+5734;San Pietro in Cariano;00125;45,50865;10,88834;137;veneto;Regionale ARPA Veneto;1961;2020;site2
+5735;Illasi;00126;45,45954;11,17178;155;veneto;Regionale ARPA Veneto;1992;2020;site2
+5738;Castelnuovo del Garda;00129;45,45398;10,77261;122;veneto;Regionale ARPA Veneto;1961;2020;site2
+5744;Passo Santa Caterina Valdagno;00140;45,61913;11,25936;716;veneto;Regionale ARPA Veneto;1961;2020;site2
+5745;Rosa';00144;45,71592;11,77648;83;veneto;Regionale ARPA Veneto;1992;2020;site2
+5752;Balduina Sant'Urbano;00152;45,13408;11,58438;8;veneto;Regionale ARPA Veneto;1995;2020;site2
+5755;Cavallino (Treporti);00160;45,45805;12,48642;2;veneto;Regionale ARPA Veneto;1972;2020;site2
+5756;Noventa di Piave;00163;45,66761;12,58868;4;veneto;Regionale ARPA Veneto;1993;2020;site2
+5759;Lugugnana di Portogruaro;00166;45,70425;12,94687;2;veneto;Regionale ARPA Veneto;1961;2020;site2
+5764;Codevigo;00175;45,24301;12,09993;2;veneto;Regionale ARPA Veneto;1961;2020;site2
+5771;Vazzola;00185;45,81115;12,34149;38;veneto;Regionale ARPA Veneto;1992;2020;site2
+5774;Villorba;00188;45,74828;12,23517;40;veneto;Regionale ARPA Veneto;1961;2020;site2
+5775;Valdobbiadene Bigolino;00189;45,88139;12,00731;189;veneto;Regionale ARPA Veneto;1961;2020;site2
+5784;Lamon;00200;46,04918;11,74661;586;veneto;Regionale ARPA Veneto;1992;2020;site2
+5792;Valle di Cadore;00224;46,41477;12,33254;738;veneto;Regionale ARPA Veneto;1997;2020;site2
+5797;San Martino d' Alpago;00236;46,17982;12,39696;805;veneto;Regionale ARPA Veneto;1993;2020;site2
+5798;Cortina loc. Gilardon;00237;46,53602;12,12760;1216;veneto;Regionale ARPA Veneto;1961;2020;site2
+5799;Misurina;00238;46,57574;12,25027;1810;veneto;Regionale ARPA Veneto;1994;2020;site2
+5800;Costalta;00246;46,57810;12,57575;1195;veneto;Regionale ARPA Veneto;1993;2020;site2
+9604;ARIANOETGFE;08ARIANOETGFE;44,94560;12,12090;2;veneto;Idrografica;1961;2018;sito3

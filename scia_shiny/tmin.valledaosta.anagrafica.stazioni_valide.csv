@@ -1,0 +1,10 @@
+SiteID;SiteCode;SiteName;Bacino;Comune;Comunità montana;Est;Latitude;Località;Longitude;Nord;Pluviometro riscaldato;Elevation;Rete;nome_rete;annoInizio;annoFine;tipo
+113;4080;Etroubles - Chevrière;torrente Artanavaz;Etroubles;Grand-Combin;362790 m;45,8167;Collina;7,23278;5075402 m;Si;1339;Arpa;NESSUNA INFORMAZIONE RETE;1996;2020;site1
+20;1200;Courmayeur - Mont de la Saxe;Dora Baltea;Courmayeur;Valdigne-Mont-Blanc;343313 m;45,8170;Mont de la Saxe;6,98204;5075894 m;No;2076;CF;NESSUNA INFORMAZIONE RETE;1995;2020;sito3
+31;1320;Issime - Capoluogo;torrente Lys;Issime;Walser;411019 m;45,6873;Capoluogo;7,85621;5060138 m;Si;960;CF;NESSUNA INFORMAZIONE RETE;1980;2020;sito3
+47;1500;Pré-Saint-Didier - Plan Praz;Dora di La Thuile;Pré-Saint-Didier;Valdigne-Mont-Blanc;340838 m;45,7549;Plan-Praz;6,95245;5069054 m;No;2044;CF;NESSUNA INFORMAZIONE RETE;1995;2020;sito3
+57;1620;Valgrisenche - Menthieu;Dora di Valgrisenche;Valgrisenche;Grand-Paradis;348237 m;45,6137;Menthieu;7,05250;5053168 m;Si;1859;CF;NESSUNA INFORMAZIONE RETE;1970;2020;sito3
+109;4000;Aosta - Piazza Plouves;Dora Baltea;Aosta;-;369669 m;45,7369;Piazza Plouves;7,32372;5066377 m;Si;580;Arpa;NESSUNA INFORMAZIONE RETE;1996;2020;sito3
+110;4020;Aosta - Mont-Fleury;Dora Baltea;Aosta;-;367733 m;45,7305;Montfleury;7,29903;5065715 m;No;577;Arpa;NESSUNA INFORMAZIONE RETE;1997;2020;sito3
+111;4050;La Thuile - Les Granges;torrente Ruitor;La Thuile;Valdigne Mont-Blanc;341884 m;45,7297;Les Granges;6,96684;5066222 m;Si;1637;Arpa;NESSUNA INFORMAZIONE RETE;1997;2020;sito3
+115;4110;Donnas - Clapey;Dora Baltea;Donnas;Mont-Rose;403871 m;45,5966;Clapey;7,76643;5050162 m;Si;341;Arpa;NESSUNA INFORMAZIONE RETE;1997;2020;sito3

@@ -1,0 +1,30 @@
+SiteID;SiteName;SiteCode;Latitude;Longitude;Elevation;County;nome_rete;annoInizio;annoFine;tipo
+5598;ISOLA S. ANTONIO;00220;45,022;8,855;76;piemonte;Regionale ARPA Piemonte;1994;2020;site2
+5599;OVADA;00230;44,648;8,637;193;piemonte;Regionale ARPA Piemonte;1998;2020;site2
+5600;ALESSANDRIA LOBBI;00115;44,938;8,705;88;piemonte;Regionale ARPA Piemonte;1989;2020;site2
+5602;CASALE MONFERRATO;00119;45,133;8,505;105;piemonte;Regionale ARPA Piemonte;1990;2020;site2
+5603;ASTI TANARO;00138;44,886;8,213;116;piemonte;Regionale ARPA Piemonte;2000;2020;site2
+5607;CHIUSA PESIO;00307;44,234;7,661;924;piemonte;Regionale ARPA Piemonte;1997;2020;site2
+5608;PONTECHIANALE;00283;44,613;7,054;1650;piemonte;Regionale ARPA Piemonte;1994;2020;site2
+5609;MONDOVI';00315;44,397;7,812;414;piemonte;Regionale ARPA Piemonte;1994;2020;site2
+5611;BROSSASCO;00356;44,569;7,374;675;piemonte;Regionale ARPA Piemonte;2000;2020;site2
+5612;BRA;00317;44,702;7,853;327;piemonte;Regionale ARPA Piemonte;1994;2020;site2
+5613;BOVES;00107;44,336;7,563;573;piemonte;Regionale ARPA Piemonte;1988;2020;site2
+5616;BORGOMANERO;00130;45,689;8,461;299;piemonte;Regionale ARPA Piemonte;1990;2020;site2
+5617;PIETRASTRETTA;00146;45,143;7,055;732;piemonte;Regionale ARPA Piemonte;1992;2020;site2
+5620;SALBERTRAND;00150;45,072;6,895;1150;piemonte;Regionale ARPA Piemonte;1992;2020;site2
+5621;LUSERNA S. GIOVANNI;00105;44,814;7,242;468;piemonte;Regionale ARPA Piemonte;1989;2020;site2
+5627;LANZO;00111;45,290;7,494;565;piemonte;Regionale ARPA Piemonte;1990;2020;site2
+5628;CUMIANA;00109;44,965;7,392;305;piemonte;Regionale ARPA Piemonte;1988;2020;site2
+5629;COAZZE;00260;45,043;7,245;1110;piemonte;Regionale ARPA Piemonte;1994;2020;site2
+5630;LAGO AGNEL;00237;45,469;7,140;2326;piemonte;Regionale ARPA Piemonte;1997;2019;site2
+5632;ALA DI STURA;00250;45,313;7,311;1063;piemonte;Regionale ARPA Piemonte;1994;2020;site2
+5634;VERCELLI;00198;45,326;8,391;132;piemonte;Regionale ARPA Piemonte;1994;2020;site2
+5639;PIEDICAVALLO;00191;45,690;7,957;1108;piemonte;Regionale ARPA Piemonte;1998;2020;site2
+5640;OROPA;00123;45,628;7,982;1222;piemonte;Regionale ARPA Piemonte;1989;2020;site2
+5642;CICOGNA;00340;46,004;8,493;597;piemonte;Regionale ARPA Piemonte;2000;2020;site2
+5644;ALPE CHEGGIO;00160;46,086;8,117;1661;piemonte;Regionale ARPA Piemonte;1997;2020;site2
+5646;CRODO;00156;46,228;8,325;571;piemonte;Regionale ARPA Piemonte;1993;2020;site2
+5647;PALLANZA;00641;45,925;8,550;214;piemonte;Regionale ARPA Piemonte;1998;2019;site2
+5649;DOMODOSSOLA;00117;46,104;8,303;255;piemonte;Regionale ARPA Piemonte;1961;2020;site2
+5651;ALPE DEVERO;00154;46,317;8,261;1700;piemonte;Regionale ARPA Piemonte;1992;2020;site2

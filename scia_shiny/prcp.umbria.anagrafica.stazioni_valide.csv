@@ -1,0 +1,24 @@
+SiteID;SiteName;FullSiteCode;SiteCode;County;Latitude;Longitude;Elevation;Comments;State;SiteName_CentroFunzionale;nome_rete;annoInizio;annoFine;tipo
+3539;Perugia_santa_giuliana;3539;3539;Umbria;43,105;12,387;412;Quota ricavata da dem;Italy;Perugia_santa_giuliana;NESSUNA INFORMAZIONE RETE;1961;2020;site2
+811;Azzano;811;811;Umbria;42,812;12,757;235;Quota ricavata da dem;Italy;Azzano;NESSUNA INFORMAZIONE RETE;2000;2020;sito3
+270;Bastia_umbra;270;270;Umbria;43,054;12,561;204;Quota ricavata da dem;Italy;Bastia_umbra;NESSUNA INFORMAZIONE RETE;1961;2020;sito3
+3545;Cannara;3545;3545;Umbria;42,996;12,584;190;Quota ricavata da dem;Italy;Cannara;NESSUNA INFORMAZIONE RETE;2000;2020;sito3
+1480;Carestello;1480;1480;Umbria;43,286;12,534;494;Quota ricavata da dem;Italy;Carestello;NESSUNA INFORMAZIONE RETE;2000;2020;sito3
+792;Casa_castalda;792;792;Umbria;43,180;12,659;663;Quota ricavata da dem;Italy;Casa_castalda;NESSUNA INFORMAZIONE RETE;2000;2020;sito3
+795;Casigliano;795;795;Umbria;42,716;12,496;264;Quota ricavata da dem;Italy;Casigliano;NESSUNA INFORMAZIONE RETE;2000;2020;sito3
+1653;Cerbara;1653;1653;Umbria;43,509;12,218;318;Quota ricavata da dem;Italy;Cerbara;NESSUNA INFORMAZIONE RETE;2000;2020;sito3
+775;Collepepe;775;775;Umbria;42,930;12,406;175;Quota ricavata da dem;Italy;Collepepe;NESSUNA INFORMAZIONE RETE;2000;2020;sito3
+797;Forsivo;797;797;Umbria;42,799;13,014;792;Quota ricavata da dem;Italy;Forsivo;NESSUNA INFORMAZIONE RETE;2000;2020;sito3
+301;Gubbio;301;301;Umbria;43,341;12,563;449;Quota ricavata da dem;Italy;Gubbio;NESSUNA INFORMAZIONE RETE;1961;2020;sito3
+1683;Monte_cucco;1683;1683;Umbria;43,375;12,729;1155;Quota ricavata da dem;Italy;Monte_cucco;NESSUNA INFORMAZIONE RETE;2000;2020;sito3
+748;Passignano;748;748;Umbria;43,187;12,142;308;Quota ricavata da dem;Italy;Passignano_alta;NESSUNA INFORMAZIONE RETE;2000;2020;sito3
+266;Petrelle;266;266;Umbria;43,350;12,160;400;Quota ricavata da dem;Italy;Petrelle;NESSUNA INFORMAZIONE RETE;1961;2020;sito3
+738;Petrignano_del_lago_-_sp_302;738;738;Umbria;43,161;11,953;301;Quota ricavata da dem;Italy;Petrignano_del_lago;NESSUNA INFORMAZIONE RETE;2000;2020;sito3
+1522;Piediluco;1522;1522;Umbria;42,534;12,767;389;Quota ricavata da dem;Italy;Piediluco;NESSUNA INFORMAZIONE RETE;2000;2018;sito3
+253;Ponticelli;253;253;Umbria;42,932;11,969;249;Quota ricavata da dem;Italy;Ponticelli;NESSUNA INFORMAZIONE RETE;2000;2020;sito3
+798;Ripalvella;798;798;Umbria;42,843;12,300;453;Quota ricavata da dem;Italy;Ripalvella;NESSUNA INFORMAZIONE RETE;2000;2020;sito3
+794;San_benedetto_vecchio;794;794;Umbria;43,437;12,464;679;Quota ricavata da dem;Italy;S.benedetto_vecchio;NESSUNA INFORMAZIONE RETE;1961;2020;sito3
+793;San_biagio_della_valle;793;793;Umbria;43,017;12,280;237;Quota ricavata da dem;Italy;S.biagio_della_valle;NESSUNA INFORMAZIONE RETE;2000;2020;sito3
+799;San_silvestro;799;799;Umbria;42,756;12,674;369;Quota ricavata da dem;Italy;S.silvestro;NESSUNA INFORMAZIONE RETE;2000;2020;sito3
+268;Todi;268;268;Umbria;42,787;12,410;211;Quota ricavata da dem;Italy;Todi;NESSUNA INFORMAZIONE RETE;1961;2020;sito3
+1682;Vallo_di_nera;1682;1682;Umbria;42,757;12,860;414;Quota ricavata da dem;Italy;Vallo_di_nera;NESSUNA INFORMAZIONE RETE;1961;2020;sito3

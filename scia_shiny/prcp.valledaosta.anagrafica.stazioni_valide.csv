@@ -1,0 +1,4 @@
+SiteID;SiteCode;SiteName;Bacino;Comune;Comunità montana;Est;Latitude;Località;Longitude;Nord;Pluviometro riscaldato;Elevation;Rete;nome_rete;annoInizio;annoFine;tipo
+44;1470;Pontboset - Fournier;torrente Ayasse;Pontboset;Mont-Rose;397138 m;45,6046;Fournier;7,67989;5051162 m;Si;1087;CF;NESSUNA INFORMAZIONE RETE;1961;2020;sito3
+60;1650;Valsavarenche - Eaux-Rousses;torrente Savara;Valsavarenche;Grand-Paradis;360272 m;45,5668;Eaux-Rousses;7,20835;5047673 m;Si;1651;CF;NESSUNA INFORMAZIONE RETE;2000;2019;sito3
+98;4090;Saint-Christophe - Aeroporto;Dora Baltea;Saint-Christophe;Mont-Emilius;372766 m;45,7393;Aeroporto;7,36344;5066581 m;Si;545;CF;NESSUNA INFORMAZIONE RETE;1961;2020;sito3

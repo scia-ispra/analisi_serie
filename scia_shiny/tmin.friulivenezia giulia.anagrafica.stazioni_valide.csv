@@ -1,0 +1,13 @@
+SiteID;SiteCode;SiteName;Latitude;Longitude;Elevation;Comments;nome_rete;annoInizio;annoFine;tipo
+2;BAR;Barcis;46,193202;12,571028;468;Serie FVG: il SiteID non va associato al SiteID delle serie HisCentral;NESSUNA INFORMAZIONE RETE;1974;2020;sito3
+5;BOR;Bordano;46,332764;13,081196;230;Serie FVG: il SiteID non va associato al SiteID delle serie HisCentral;NESSUNA INFORMAZIONE RETE;1998;2020;sito3
+6;BGG;Borgo grotta gigante;45,709385;13,764681;275;Serie FVG: il SiteID non va associato al SiteID delle serie HisCentral;NESSUNA INFORMAZIONE RETE;1990;2020;sito3
+13;CHI;Chievolis;46,254523;12,734044;345;Serie FVG: il SiteID non va associato al SiteID delle serie HisCentral;NESSUNA INFORMAZIONE RETE;1974;2020;sito3
+14;CIV;Cividale del friuli;46,080442;13,420014;127;Serie FVG: il SiteID non va associato al SiteID delle serie HisCentral;NESSUNA INFORMAZIONE RETE;1961;2020;sito3
+20;FOS;Fossalon;45,714768;13,458865;0;Serie FVG: il SiteID non va associato al SiteID delle serie HisCentral;NESSUNA INFORMAZIONE RETE;1961;2020;sito3
+21;GEM;Gemona del friuli;46,261297;13,122088;184;Serie FVG: il SiteID non va associato al SiteID delle serie HisCentral;NESSUNA INFORMAZIONE RETE;1962;2020;sito3
+27;LIG;Lignano sabbiadoro;45,701909;13,147078;7;Serie FVG: il SiteID non va associato al SiteID delle serie HisCentral;NESSUNA INFORMAZIONE RETE;1969;2020;sito3
+39;POR;Pordenone;45,953618;12,681257;23;Serie FVG: il SiteID non va associato al SiteID delle serie HisCentral;NESSUNA INFORMAZIONE RETE;1961;2019;sito3
+47;TAR;Tarvisio;46,510775;13,551886;794;Serie FVG: il SiteID non va associato al SiteID delle serie HisCentral;NESSUNA INFORMAZIONE RETE;1961;2020;sito3
+51;TRI;Trieste molo f.lli bandiera;45,649996;13,752242;1;Serie FVG: il SiteID non va associato al SiteID delle serie HisCentral;NESSUNA INFORMAZIONE RETE;1961;2019;sito3
+52;UDI;Udine s.o.;46,035212;13,226672;91;Serie FVG: il SiteID non va associato al SiteID delle serie HisCentral;NESSUNA INFORMAZIONE RETE;1961;2020;sito3
