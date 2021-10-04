@@ -13,9 +13,9 @@ library("shinydashboard")
 library("leaflet")
 library("DT")
 library("shinycssloaders")
+source("vars.R")
 
 
-parametri<<-c("Precipitazione","Temperatura Massima","Temperatura Minima")
 
 ui<-dashboardPage(
     skin = "blue",
@@ -24,7 +24,8 @@ ui<-dashboardPage(
       shiny::selectInput("parametro","Parametro",choices=parametri,multiple=FALSE),
       sliderInput("ai",label="Anno inizio serie",min=1961,max=2000,step=1,sep="",value=c(1961,2000)),
       sliderInput("af",label="Anno fine serie",min=2018,max=2020,step=1,sep="",value=c(2018,2020)),
-      selectInput("regioni","Regioni",choices=c("Seleziona tutte le stazioni"),multiple = TRUE,selected = "Seleziona tutte le stazioni")
+      selectInput("regioni","Regioni",choices="",multiple = TRUE,selected = ""),      
+      actionButton("vai",label = "Aggiorna rete stazioni")
     ),
     
     
@@ -34,7 +35,7 @@ ui<-dashboardPage(
         
         tabBox(
           tabPanel(title="Mappa",withSpinner(leafletOutput("mappa",width="100%",height=800),type=1)),
-          tabPanel(title="Dati",withSpinner(dataTableOutput("tabella"))),
+          tabPanel(title="Dati",withSpinner(DT::dataTableOutput("tabella"))),
           title=textOutput("titolo"),
           width=12
       )),
