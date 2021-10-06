@@ -16,7 +16,7 @@ https://guidoispra.shinyapps.io/scia/
 | Molise   | I dati andrebbero richiesti per il periodo 1961 - 2020 su  tutte le serie disponibili. I dati a nostra disposizione non sono sovrapponibili con quelli 2014 - 2020 inviati dal Molise. Per la temperatura i dati che abbiamo copropno pochi anni. |
 | Puglia   | Inviata mail per chiedere dati antecedenti al 1990. A questa mail ha risposto Franco Intini della Protezione Civile della Puglia dicendo che questi dati non esistono in formato digitale. |
 | Sardegna | Aspettare invio dati da parte di Michele Fiori |
-| Sicilia  | **Caricare su SCIA dati passati da Guido per il 2020 (ricaricare anche 2019?) e ripassare i dati a Guido** |
+| Sicilia  | **Caricare su SCIA dati passati da Guido per il 2020 (ricaricare anche 2019?) e ripassare i dati a Guido. Fatto** |
 | Veneto   | **Mancano dati di temperatura antecedenti al 1992. Sul database compare la rete TEMP. In generale questa rete andrebbe assorbita dalle reti ufficiali, non solo per il Veneto** |
 
 
@@ -111,11 +111,7 @@ https://guidoispra.shinyapps.io/scia/
 
 ## Sicilia
 
-Questi risultati si riferiscono alle serie che Guido utilizza per il Rapporto Gli Indicatori del Clima. Non include quindi le nuove stazioni che potrebbero allungare le serie storiche.
-
-- Precipitazione: ben 44 stazioni iniziano tra il 1961-1966. Tuttavia solo 10 stazioni terminano nel 2020, le restanti terminano tra il 2018 e 2019.
-- Tmax: individuate 25 serie. 19 serie iniziano tra il 1961 - 1963. 15 serie terminano nel 2020 mentre 10 serie terminano tra il 2018 e il 2019.
-- Tmin: individuate 24 serie. 18 serie iniziano tra il 1961 - 1963. 14 serie terminano nel 2020 mentre 10 serie terminano tra il 2018 e il 2019.
+Per trovare associazioni tra serie Osservatorio Acque/Idrografico con rete SIAS utilizzato un raggio di ricerca di 3 km.
 
 ## Trentino
 
