@@ -10,7 +10,7 @@ https://guidoispra.shinyapps.io/scia/
 |----------| ------- |
 | Abruzzo  | Inviata mail per chiedere se esistono in formato digitale i dati antecedenti al 1974. |
 | Piemonte | **Caricare su SCIA dati 2017 e ripassare dati a Guido. Fatto.** |
-| Liguria  | **Provare a chiedere i dati per il periodo 2000 - 2010 ?** |
+| Liguria  | **Richiesti i dati per il periodo 2000 - 2010, ma al momento non disponibili (ottobre 2021). Caricati invece i dati per il 2017 e il 2020. ** |
 | Lombardia| **Chiedere i dati del 2020 per le serie storiche di temperatura e precipitazione identificate** |
 | Marche   | **Verificare su SCIA presenza dei dati per gli anni 2017/2018 ed eventualmente richiedere i dati** |
 | Molise   | Francesca ha inviato la richiesta dei dati al Molise (Ottobre 2021) |
