@@ -79,7 +79,7 @@ https://guidoispra.shinyapps.io/scia_shiny
 - Precipitazione: individuate 29 serie di cui 26 potenzialmente utili ai trend di lungo periodo. 
 - Tmax: individuate 15 serie di cui almeno 13 potenzialmente utili al trend di lungo periodo. 
 - Tmin: individuate 14 serie di cui almeno 12 potenzialmente utili al trend di lungo periodo. 
-- 
+
 ## Lombardia
 
 - Precipitazione e temperatura: **per trovare serie limitrofe e' necessario estendere il raggio di ricerca oltre 5 km, per trovare associazioni utili anche a distanze di 6/7 km**
