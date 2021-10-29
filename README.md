@@ -1,6 +1,6 @@
 # Mappa stazioni identificate
 
-https://guidoispra.shinyapps.io/scia/
+https://guidoispra.shinyapps.io/scia_shiny
 
 ---
 
@@ -9,14 +9,13 @@ https://guidoispra.shinyapps.io/scia/
 | Regione  | Da Fare |
 |----------| ------- |
 | Abruzzo  | Inviata mail per chiedere se esistono in formato digitale i dati antecedenti al 1974. |
-| Piemonte | **Caricare su SCIA dati 2017 e ripassare dati a Guido. Fatto.** |
-| Liguria  | **Richiesti i dati per il periodo 2000 - 2010, ma al momento non disponibili (ottobre 2021). Caricati invece i dati per il 2017 e il 2020. ** |
+| Piemonte | Caricareti su SCIA dati 2017 e ripassare dati a Guido.|
+| Liguria  | Richiesti i dati per il periodo 2000 - 2010, ma al momento non disponibili (ottobre 2021). Caricati invece i dati per il 2017 e il 2020.|
 | Lombardia| **Chiedere i dati del 2020 per le serie storiche di temperatura e precipitazione identificate** |
-| Marche   | **Verificare su SCIA presenza dei dati per gli anni 2017/2018 ed eventualmente richiedere i dati** |
-| Molise   | Francesca ha inviato la richiesta dei dati al Molise (Ottobre 2021) |
+| Molise   | **Francesca ha inviato la richiesta dei dati al Molise (Ottobre 2021)**|
 | Puglia   | I dati antecedenti alla decade dei 90 non sono disponibili in formato analogico. Ottenuta risposta da Franco Intini. |
 | Sardegna | Aspettare invio dati da parte di Michele Fiori |
-| Sicilia  | **Caricare su SCIA dati passati da Guido per il 2020 (ricaricare anche 2019?) e ripassare i dati a Guido. Fatto** |
+| Sicilia  | Caricati su SCIA dati passati da Guido per il 2020 (ricaricare anche 2019?) e ripassare i dati a Guido. |
 | Veneto   | **Mancano dati di temperatura antecedenti al 1992. Sul database compare la rete TEMP. In generale questa rete andrebbe assorbita dalle reti ufficiali, non solo per il Veneto** |
 
 
@@ -77,10 +76,10 @@ https://guidoispra.shinyapps.io/scia/
 
 **Molte serie hanno dati mancanti tra il 2000 e il 2010**
 
-- Precipitazione: individuate 23 serie di cui 21 potenzialmente utili ai trend di lungo periodo. **Attenzione: 11 di queste serie finiscono al 2019**
-- Tmax: individuate 11 serie di cui almeno 9 potenzialmente utili al trend di lungo periodo. **Attenzione: 7 di queste serie finiscono al 2019**
-- Tmin: individuate 11 serie di cui almeno 9 potenzialmente utili al trend di lungo periodo. **Attenzione: 7 di queste serie finiscono al 2019**
-
+- Precipitazione: individuate 29 serie di cui 26 potenzialmente utili ai trend di lungo periodo. 
+- Tmax: individuate 15 serie di cui almeno 13 potenzialmente utili al trend di lungo periodo. 
+- Tmin: individuate 14 serie di cui almeno 12 potenzialmente utili al trend di lungo periodo. 
+- 
 ## Lombardia
 
 - Precipitazione e temperatura: **per trovare serie limitrofe e' necessario estendere il raggio di ricerca oltre 5 km, per trovare associazioni utili anche a distanze di 6/7 km**
