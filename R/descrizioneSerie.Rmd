@@ -777,9 +777,13 @@ downloadthis::download_this(subana,output_name=glue::glue("{PARAM}.{REGIONE}.ana
 
 
 daScrivere<-NULL
-if(!is.null(codiciSerieValide) & !is.null(codiciSerieValideSenzaLimitrofe)) left_join(finale[,c("yy","mm","dd",codiciSerieValide)],dati[,c("yy","mm","dd",codiciSerieValideSenzaLimitrofe)])->daScrivere
-if(!is.null(codiciSerieValideSenzaLimitrofe)) dati[,c("yy","mm","dd",codiciSerieValideSenzaLimitrofe)]->daScrivere
-if(!is.null(codiciSerieValide)) finale[,c("yy","mm","dd",codiciSerieValide)]->daScrivere
+if(!is.null(codiciSerieValide) & !is.null(codiciSerieValideSenzaLimitrofe)){
+  left_join(finale[,c("yy","mm","dd",codiciSerieValide)],dati[,c("yy","mm","dd",codiciSerieValideSenzaLimitrofe)])->daScrivere  
+}else if(!is.null(codiciSerieValideSenzaLimitrofe)){
+  dati[,c("yy","mm","dd",codiciSerieValideSenzaLimitrofe)]->daScrivere
+} else if(!is.null(codiciSerieValide)){
+  finale[,c("yy","mm","dd",codiciSerieValide)]->daScrivere
+} 
 
 
 write_delim(daScrivere,file=glue::glue("{PARAM}.{REGIONE}.serie_valide.csv"),delim=";",col_names = TRUE)
