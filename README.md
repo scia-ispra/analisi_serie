@@ -37,8 +37,10 @@ https://guidoispra.shinyapps.io/scia_shiny
 
 ## Basilicata
 
-- Precipitazione: indviduate 10 serie di cui 6 che partono dal 1961. Per identificare le serie si e' dovuto abbassare il livello di completezza dall'80% al 70%
-- Temperatura massima e minima: indviduate 9 serie di cui 1 che parte dal 1961. Per identificare le serie si e' dovuto abbassare il livello di completezza dall'80% al 70%
+Serie di Guido, quelle di SCIA passate da Piero incomplete.
+
+- Precipitazione: indviduate 10 serie di cui 6 che partono dal 1961. Per identificare le serie si e' dovuto abbassare il livello di completezza dall'80% al 50%
+- Temperatura massima e minima: indviduate 9 serie di cui 1 che parte dal 1961. Per identificare le serie si e' dovuto abbassare il livello di completezza dall'80% al 50%
 
 ## Bolzano
 
