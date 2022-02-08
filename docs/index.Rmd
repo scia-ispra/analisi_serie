@@ -95,6 +95,14 @@ Analisi dei risultati per l'identificazione delle serie di temperatura e precipi
 - [tmax](./puglia/tmax.puglia.descrizioneSerie.html)
 - [tmin](./puglia/tmin.puglia.descrizioneSerie.html)
 
+
+### Sardegna
+
+- [precipitazione](./sardegna/prcp.sardegna.descrizioneSerie.html)
+- [tmax](./sardegna/tmax.sardegna.descrizioneSerie.html)
+- [tmin](./sardegna/tmin.sardegna.descrizioneSerie.html)
+
+
 ### Sicilia
 
 - [precipitazione](./sicilia/prcp.sicilia.descrizioneSerie.html)
