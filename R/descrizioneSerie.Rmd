@@ -248,7 +248,7 @@ if(nrow(stazioniVicine)){
   c(newAna$SiteID,newAna$SiteID2)->serieLimitrofe
 
   
-  
+ 
   #verifico non solo la distanza nello spazio ma anche in quota
   newAna %>%
     mutate(distanzaElevation=round(abs(Elevation.x-Elevation.y),1)) %>%
@@ -259,9 +259,25 @@ if(nrow(stazioniVicine)){
   
     
     newAna %>%
-      dplyr::select(SiteID,SiteID2,SiteName.x,SiteName.y,distanza,distanzaElevation,Elevation.x,Elevation.y,everything()) %>%
-      dplyr::distinct(distanza,distanzaElevation,.keep_all = TRUE)->newAna 
-    #potrebbero esserci due stazioni che distano da una stessa stazione lo stesso numero di metri in piano e in altezza..ma quanto probabile che capiti?
+      dplyr::select(SiteID,SiteID2,SiteName.x,SiteName.y,distanza,distanzaElevation,Elevation.x,Elevation.y,everything())->ana_temp
+    
+    righe<-c()
+    purrr::map_dbl(1:nrow(ana_temp),.f=function(.i){ 
+    
+      if(.i %in% righe) return(-999)
+      righe<<-c(.i,righe)  
+      ana_temp$SiteID[.i]->.id 
+      ana_temp$SiteID2[.i]->.id2 
+      which((ana_temp$SiteID==.id2) & (ana_temp$SiteID2==.id))->riga_stessa_coppia
+      if(!length(riga_stessa_coppia)) stop("Non me lo aspettavo")
+      if(riga_stessa_coppia %in% righe) return(-999)
+      riga_stessa_coppia
+      
+    })->righe_duplicati_da_eliminare
+    
+    righe_duplicati_da_eliminare[righe_duplicati_da_eliminare > -999]-> righe_duplicati_da_eliminare
+    
+    ana_temp[-righe_duplicati_da_eliminare,]->newAna
 
     #Ok ho stazioni limitrofe nello spazio e in quota. Se le due serie si sovrappongono completamente nel tempo, allora restituisco una riga
     #per ciascuna delle due stazioni. Se invece si sovrappongono parzialmente restituisco una sola riga di informazioni in cui compaiono i codici delle due serie
@@ -458,6 +474,7 @@ if(nrow(stazioniVicine)){
       if(anni[ultimoAnnoValido]< ULTIMO_ANNO_DISPONIBILE) return()
       
       ydati2[primoAnnoValido:ultimoAnnoValido,.x]->subydati2
+      
       checkSeriesValidity(subydati2,percentuale.anni.validi = 80,max.size.block.na = 14,ultimi_anni_validi = 0,lunghezza.minima.serie = 10)->ris
       
       
@@ -513,6 +530,7 @@ if(nrow(stazioniVicine)){
 #Esaminiamo le stazioni che non hanno stazioni limitrofe nel raggio di params$distanza 
 #################################
 names(ydati)->codiciSerieSenzaLimitrofe
+print(codiciSerieSenzaLimitrofe)
 
 if(!is.null(serieLimitrofe))  setdiff(codiciSerieSenzaLimitrofe,serieLimitrofe)->codiciSerieSenzaLimitrofe
 
@@ -531,7 +549,7 @@ purrr::map(.x=codiciSerieSenzaLimitrofe,.f=function(.x){
   
   if(anni[primoAnnoValido]>PRIMO_ANNO_DISPONIBILE) return()
   if(anni[ultimoAnnoValido]< ULTIMO_ANNO_DISPONIBILE) return()
-  
+
   ydati[primoAnnoValido:ultimoAnnoValido,.x]->subydati
   checkSeriesValidity(subydati,percentuale.anni.validi = 80,max.size.block.na = 14,ultimi_anni_validi = 0,lunghezza.minima.serie = 10)->ris
   
