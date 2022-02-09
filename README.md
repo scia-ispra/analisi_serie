@@ -1,10 +1,4 @@
-# Mappa stazioni identificate
-
-https://guidoispra.shinyapps.io/scia_shiny
-
 ---
-
-# Da Fare
 
 | Regione  | Da Fare |
 |----------| ------- |
