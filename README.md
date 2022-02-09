@@ -1,5 +1,4 @@
 ---
-
 | Regione  | Da Fare |
 |----------| ------- |
 | Abruzzo  | Inviata mail per chiedere se esistono in formato digitale i dati antecedenti al 1974. |
@@ -11,8 +10,6 @@
 | Sardegna | Aspettare invio dati da parte di Michele Fiori. Ricevuto l'8 febbraio 2022. |
 | Sicilia  | I risultati sono stati aggiornati a dicembre 2021 con il nuov invio di Piero che corregge il precedente |
 | Veneto   | **Mancano dati di temperatura antecedenti al 1992. Sul database compare la rete TEMP. In generale questa rete andrebbe assorbita dalle reti ufficiali, non solo per il Veneto** |
-
-
 ---
 
 # Analisi_serie
