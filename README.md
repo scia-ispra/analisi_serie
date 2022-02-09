@@ -14,7 +14,7 @@ https://guidoispra.shinyapps.io/scia_shiny
 | Lombardia| **Chiedere i dati del 2020 per le serie storiche di temperatura e precipitazione identificate** |
 | Molise   | **Francesca ha inviato la richiesta dei dati al Molise (Ottobre 2021)**|
 | Puglia   | I dati antecedenti alla decade dei 90 non sono disponibili in formato analogico. Ottenuta risposta da Franco Intini. |
-| Sardegna | Aspettare invio dati da parte di Michele Fiori |
+| Sardegna | Aspettare invio dati da parte di Michele Fiori. Ricevuto l'8 febbraio 2022. |
 | Sicilia  | I risultati sono stati aggiornati a dicembre 2021 con il nuov invio di Piero che corregge il precedente |
 | Veneto   | **Mancano dati di temperatura antecedenti al 1992. Sul database compare la rete TEMP. In generale questa rete andrebbe assorbita dalle reti ufficiali, non solo per il Veneto** |
 
